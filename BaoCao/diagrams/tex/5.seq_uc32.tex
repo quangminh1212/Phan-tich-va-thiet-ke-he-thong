@@ -1,0 +1,28 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{a}{Nhân viên / QL kho}
+\newinst[2]{gd}{Giao diện phiếu xuất}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{a}{1. Mở danh sách phiếu xuất}{gd}{}
+\end{call}
+
+\begin{call}{gd}{2. Yêu cầu danh sách}{ht}{}
+  \begin{call}{ht}{3. Lấy danh sách PhieuXuatKho}{db}{Dữ liệu}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{4. Trả danh sách}{gd}{}
+\end{call}
+
+\begin{call}{gd}{5. Hiển thị bảng phiếu xuất}{a}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC32 -- Xem danh sách phiếu xuất}
+\label{fig:sequence-uc32}
+\end{figure}

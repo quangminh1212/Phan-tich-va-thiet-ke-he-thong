@@ -1,0 +1,30 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{a}{Quản trị viên}
+\newinst[2]{gd}{Giao diện tài khoản}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{a}{1. Chọn xóa / khóa tài khoản}{gd}{Xác nhận}
+\end{call}
+
+\begin{call}{gd}{2. Gửi yêu cầu xóa/khóa}{ht}{}
+  \begin{call}{ht}{3. Kiểm tra ràng buộc (phiếu, log)}{db}{Kết quả}
+  \end{call}
+  \begin{call}{ht}{4. Xóa hoặc khóa NguoiDung}{db}{Xác nhận}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{5. Trả kết quả}{gd}{Thông báo}
+\end{call}
+
+\begin{call}{gd}{6. Cập nhật danh sách tài khoản}{a}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC05 -- Xóa tài khoản}
+\label{fig:sequence-uc05}
+\end{figure}

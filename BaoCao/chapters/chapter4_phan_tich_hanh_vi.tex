@@ -85,32 +85,34 @@ Giải thích sơ đồ: \texttt{PhieuKiemKe} -- \texttt{ChiTietKiemKe} cũng th
 
 Thay vì vẽ lặp class cho từng UC CRUD (Thêm/Sửa/Xóa/Tìm/Xem DS cùng dùng một tập lớp), phần này \textbf{cắt lát theo nhóm entity}: mỗi nhóm chức năng một class diagram. Các UC cùng nhóm \textbf{chia sẻ cùng cấu trúc lớp}; khác biệt nằm ở \textbf{phương thức} gọi ra (thêm vs sửa vs xóa\ldots) và sẽ được thể hiện ở biểu đồ trình tự (Ch.5).
 
-\begin{longtable}{|p{4.2cm}|p{3.8cm}|p{4.5cm}|}
+\begin{longtable}{|p{4.5cm}|p{4cm}|p{4cm}|}
 \hline
-\textbf{Nhóm entity} & \textbf{Use case} & \textbf{Sequence then chốt (Ch.5)} \\
+\textbf{Nhóm entity} & \textbf{Use case} & \textbf{Sequence (Ch.5)} \\
 \hline
 \endfirsthead
 \hline
-\textbf{Nhóm entity} & \textbf{Use case} & \textbf{Sequence then chốt (Ch.5)} \\
+\textbf{Nhóm entity} & \textbf{Use case} & \textbf{Sequence (Ch.5)} \\
 \hline
 \endhead
-Tài khoản / xác thực & UC01--UC07 & UC01, UC03 \\
+Tài khoản / xác thực & UC01--UC07 & UC01--UC07 (đủ) \\
 \hline
-Nhà cung cấp & UC08--UC12 & UC08 \\
+Nhà cung cấp & UC08--UC12 & UC08--UC12 (đủ) \\
 \hline
-Hàng hóa & UC13--UC17 & UC13, UC16 \\
+Hàng hóa & UC13--UC17 & UC13--UC17 (đủ) \\
 \hline
-Kho & UC18--UC22 & UC18 \\
+Kho & UC18--UC22 & UC18--UC22 (đủ) \\
 \hline
-Phiếu nhập & UC23--UC27 & UC23 \\
+Phiếu nhập & UC23--UC27 & UC23--UC27 (đủ) \\
 \hline
-Phiếu xuất & UC28--UC32 & UC28 \\
+Phiếu xuất & UC28--UC32 & UC28--UC32 (đủ) \\
 \hline
 Kiểm kê & UC33 & UC33 \\
 \hline
 Báo cáo NXT & UC34 & UC34 \\
 \hline
 \end{longtable}
+
+Mỗi use case có \textbf{một} biểu đồ trình tự tương ứng ở Ch.5 (tổng 34 sequence).
 
 \subsection{Nhóm tài khoản / xác thực (UC01--UC07)}
 

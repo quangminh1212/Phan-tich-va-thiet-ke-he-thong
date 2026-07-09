@@ -1,0 +1,33 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{a}{Nhân viên kho}
+\newinst[2]{gd}{Giao diện phiếu xuất}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{a}{1. Chọn phiếu (Chờ duyệt) để sửa}{gd}{Hiển thị form}
+\end{call}
+
+\begin{call}{a}{2. Sửa thông tin / chi tiết hàng}{gd}{}
+\end{call}
+
+\begin{call}{gd}{3. Gửi cập nhật phiếu}{ht}{}
+  \begin{call}{ht}{4. Kiểm tra trạng thái + tồn (nếu đổi SL)}{db}{Kết quả}
+  \end{call}
+  \begin{call}{ht}{5. Cập nhật PhieuXuat + ChiTiet}{db}{Xác nhận}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{6. Trả kết quả}{gd}{Thành công}
+\end{call}
+
+\begin{call}{gd}{7. Hiển thị phiếu đã sửa}{a}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC29 -- Sửa phiếu xuất}
+\label{fig:sequence-uc29}
+\end{figure}

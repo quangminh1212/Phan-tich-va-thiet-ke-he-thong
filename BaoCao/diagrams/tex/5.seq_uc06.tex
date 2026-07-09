@@ -1,0 +1,28 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{a}{Quản trị viên}
+\newinst[2]{gd}{Giao diện tài khoản}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{a}{1. Nhập từ khóa / bộ lọc}{gd}{}
+\end{call}
+
+\begin{call}{gd}{2. Gửi điều kiện tìm kiếm}{ht}{}
+  \begin{call}{ht}{3. Truy vấn NguoiDung}{db}{Danh sách}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{4. Trả kết quả}{gd}{Danh sách khớp}
+\end{call}
+
+\begin{call}{gd}{5. Hiển thị kết quả tìm kiếm}{a}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC06 -- Tìm kiếm tài khoản}
+\label{fig:sequence-uc06}
+\end{figure}

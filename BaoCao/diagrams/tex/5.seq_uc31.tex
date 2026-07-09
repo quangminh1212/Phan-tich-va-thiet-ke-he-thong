@@ -1,0 +1,28 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{a}{Nhân viên / QL kho}
+\newinst[2]{gd}{Giao diện phiếu xuất}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{a}{1. Nhập điều kiện tìm phiếu}{gd}{}
+\end{call}
+
+\begin{call}{gd}{2. Gửi điều kiện tìm}{ht}{}
+  \begin{call}{ht}{3. Truy vấn PhieuXuatKho}{db}{Danh sách}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{4. Trả kết quả}{gd}{}
+\end{call}
+
+\begin{call}{gd}{5. Hiển thị phiếu khớp}{a}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC31 -- Tìm kiếm phiếu xuất}
+\label{fig:sequence-uc31}
+\end{figure}

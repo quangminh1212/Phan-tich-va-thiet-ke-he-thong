@@ -1,0 +1,30 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{a}{Người dùng}
+\newinst[2]{gd}{Giao diện hệ thống}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{a}{1. Chọn đăng xuất}{gd}{}
+\end{call}
+
+\begin{call}{gd}{2. Gửi yêu cầu đăng xuất}{ht}{}
+  \begin{call}{ht}{3. Hủy phiên làm việc}{db}{Xác nhận}
+  \end{call}
+  \begin{call}{ht}{4. Ghi log (tùy chọn)}{db}{}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{5. Trả kết quả}{gd}{Đã đăng xuất}
+\end{call}
+
+\begin{call}{gd}{6. Chuyển trang đăng nhập}{a}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC02 -- Đăng xuất}
+\label{fig:sequence-uc02}
+\end{figure}

@@ -1,0 +1,28 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{a}{Quản lý kho}
+\newinst[2]{gd}{Giao diện kho}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{a}{1. Mở danh mục kho}{gd}{}
+\end{call}
+
+\begin{call}{gd}{2. Yêu cầu danh sách}{ht}{}
+  \begin{call}{ht}{3. Lấy danh sách Kho}{db}{Dữ liệu}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{4. Trả danh sách}{gd}{}
+\end{call}
+
+\begin{call}{gd}{5. Hiển thị bảng kho}{a}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC22 -- Xem danh sách kho}
+\label{fig:sequence-uc22}
+\end{figure}

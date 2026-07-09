@@ -1,0 +1,30 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{a}{Nhân viên / QL kho}
+\newinst[2]{gd}{Giao diện NCC}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{a}{1. Chọn xóa NCC}{gd}{Xác nhận}
+\end{call}
+
+\begin{call}{gd}{2. Gửi yêu cầu xóa}{ht}{}
+  \begin{call}{ht}{3. Kiểm tra đã có phiếu nhập?}{db}{Kết quả}
+  \end{call}
+  \begin{call}{ht}{4. Xóa hoặc ngừng hoạt động}{db}{Xác nhận}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{5. Trả kết quả}{gd}{Thông báo}
+\end{call}
+
+\begin{call}{gd}{6. Cập nhật danh sách NCC}{a}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC10 -- Xóa nhà cung cấp}
+\label{fig:sequence-uc10}
+\end{figure}

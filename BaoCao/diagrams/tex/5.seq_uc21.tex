@@ -1,0 +1,28 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{a}{Quản lý kho}
+\newinst[2]{gd}{Giao diện kho}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{a}{1. Nhập từ khóa tìm kho}{gd}{}
+\end{call}
+
+\begin{call}{gd}{2. Gửi điều kiện tìm}{ht}{}
+  \begin{call}{ht}{3. Truy vấn Kho}{db}{Danh sách}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{4. Trả kết quả}{gd}{}
+\end{call}
+
+\begin{call}{gd}{5. Hiển thị kho khớp}{a}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC21 -- Tìm kiếm kho}
+\label{fig:sequence-uc21}
+\end{figure}

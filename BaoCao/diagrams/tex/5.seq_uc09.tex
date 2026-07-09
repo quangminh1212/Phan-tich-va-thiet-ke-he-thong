@@ -1,0 +1,33 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{a}{Nhân viên / QL kho}
+\newinst[2]{gd}{Giao diện NCC}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{a}{1. Chọn NCC cần sửa}{gd}{Hiển thị form}
+\end{call}
+
+\begin{call}{a}{2. Chỉnh sửa thông tin NCC}{gd}{}
+\end{call}
+
+\begin{call}{gd}{3. Gửi thông tin cập nhật}{ht}{}
+  \begin{call}{ht}{4. Kiểm tra dữ liệu}{db}{Kết quả}
+  \end{call}
+  \begin{call}{ht}{5. Cập nhật NhaCungCap}{db}{Xác nhận}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{6. Trả kết quả}{gd}{Thành công}
+\end{call}
+
+\begin{call}{gd}{7. Làm mới danh sách NCC}{a}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC09 -- Sửa nhà cung cấp}
+\label{fig:sequence-uc09}
+\end{figure}

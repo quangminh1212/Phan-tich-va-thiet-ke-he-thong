@@ -1,0 +1,33 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{a}{Quản trị viên}
+\newinst[2]{gd}{Giao diện tài khoản}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{a}{1. Chọn tài khoản cần sửa}{gd}{Hiển thị form}
+\end{call}
+
+\begin{call}{a}{2. Chỉnh sửa thông tin / vai trò}{gd}{}
+\end{call}
+
+\begin{call}{gd}{3. Gửi thông tin cập nhật}{ht}{}
+  \begin{call}{ht}{4. Kiểm tra dữ liệu hợp lệ}{db}{Kết quả}
+  \end{call}
+  \begin{call}{ht}{5. Cập nhật NguoiDung}{db}{Xác nhận}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{6. Trả kết quả}{gd}{Thông báo thành công}
+\end{call}
+
+\begin{call}{gd}{7. Làm mới danh sách tài khoản}{a}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC04 -- Sửa tài khoản}
+\label{fig:sequence-uc04}
+\end{figure}
