@@ -1,0 +1,35 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{qtv}{Quản trị viên}
+\newinst[2]{gd}{Giao diện tài khoản}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{qtv}{1. Chọn thêm tài khoản}{gd}{Hiển thị form}
+\end{call}
+
+\begin{call}{qtv}{2. Nhập thông tin, vai trò}{gd}{}
+\end{call}
+
+\begin{call}{gd}{3. Gửi thông tin tài khoản}{ht}{}
+  \begin{call}{ht}{4. Kiểm tra trùng tên đăng nhập}{db}{Kết quả}
+  \end{call}
+  \begin{call}{ht}{5. Mã hóa mật khẩu, lưu NguoiDung}{db}{Xác nhận}
+  \end{call}
+  \begin{call}{ht}{6. Ghi log (tùy chọn)}{db}{}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{7. Trả kết quả}{gd}{Thông báo thành công}
+\end{call}
+
+\begin{call}{gd}{8. Làm mới danh sách tài khoản}{qtv}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC03 -- Thêm tài khoản}
+\label{fig:sequence-uc03}
+\end{figure}

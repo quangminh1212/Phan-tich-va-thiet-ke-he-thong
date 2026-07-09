@@ -81,77 +81,128 @@ Gồm phiếu kiểm kê, chi tiết kiểm kê và log thao tác.
 
 Giải thích sơ đồ: \texttt{PhieuKiemKe} -- \texttt{ChiTietKiemKe} cũng theo mẫu master--detail; mỗi dòng lưu SL sổ, SL thực tế, chênh lệch. \texttt{LichSuThaoTac} ghi nhận ai làm gì (duyệt, thêm hàng\ldots), quan hệ với \texttt{NguoiDung}. Nhóm này bổ sung phần cấu trúc cho UC33 và audit, tách khỏi sơ đồ nhập xuất để tránh rối.
 
-\section{Phân tích cấu trúc trong từng use case (biểu đồ lớp theo UC)}
+\section{Phân tích cấu trúc theo nhóm entity (biểu đồ lớp cắt lát)}
 
-Với một số use case quan trọng, vẽ class diagram ``cắt lát'': chỉ các lớp và quan hệ \textbf{cần có để thực hiện mục tiêu use case đó}.
+Thay vì vẽ lặp class cho từng UC CRUD (Thêm/Sửa/Xóa/Tìm/Xem DS cùng dùng một tập lớp), phần này \textbf{cắt lát theo nhóm entity}: mỗi nhóm chức năng một class diagram. Các UC cùng nhóm \textbf{chia sẻ cùng cấu trúc lớp}; khác biệt nằm ở \textbf{phương thức} gọi ra (thêm vs sửa vs xóa\ldots) và sẽ được thể hiện ở biểu đồ trình tự (Ch.5).
 
-\subsection{UC03--UC07 -- Quản lý tài khoản (cắt lát lớp)}
+\begin{longtable}{|p{4.2cm}|p{3.8cm}|p{4.5cm}|}
+\hline
+\textbf{Nhóm entity} & \textbf{Use case} & \textbf{Sequence then chốt (Ch.5)} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Nhóm entity} & \textbf{Use case} & \textbf{Sequence then chốt (Ch.5)} \\
+\hline
+\endhead
+Tài khoản / xác thực & UC01--UC07 & UC01, UC03 \\
+\hline
+Nhà cung cấp & UC08--UC12 & UC08 \\
+\hline
+Hàng hóa & UC13--UC17 & UC13, UC16 \\
+\hline
+Kho & UC18--UC22 & UC18 \\
+\hline
+Phiếu nhập & UC23--UC27 & UC23 \\
+\hline
+Phiếu xuất & UC28--UC32 & UC28 \\
+\hline
+Kiểm kê & UC33 & UC33 \\
+\hline
+Báo cáo NXT & UC34 & UC34 \\
+\hline
+\end{longtable}
 
-\textbf{Mục tiêu}: duy trì danh mục người dùng (thêm/sửa/xóa/tìm/xem DS) và hỗ trợ đăng nhập/đăng xuất.
+\subsection{Nhóm tài khoản / xác thực (UC01--UC07)}
 
-\textbf{Lớp tham gia}: \texttt{NguoiDung} (đối tượng quản lý), \texttt{LichSuThaoTac} (ghi vết -- tùy chọn).
+\textbf{Mục tiêu nhóm}: đăng nhập/đăng xuất; QTV duy trì danh mục người dùng (thêm/sửa/xóa/tìm/xem DS).
 
-\textbf{Quan hệ}: Một \texttt{NguoiDung} có thể sinh ra nhiều bản ghi lịch sử thao tác (1..n).
+\textbf{Lớp tham gia}: \texttt{NguoiDung}, \texttt{LichSuThaoTac}.
 
-\textbf{Phương thức liên quan}: \texttt{themTaiKhoan} (UC03), \texttt{suaTaiKhoan} (UC04), \texttt{xoaTaiKhoan}/\texttt{khoaMoTaiKhoan} (UC05), \texttt{timKiemTaiKhoan} (UC06), \texttt{layDanhSachTaiKhoan} (UC07); \texttt{dangNhap}/\texttt{dangXuat} (UC01/UC02); \texttt{ghiLog} trên \texttt{LichSuThaoTac}.
+\textbf{Phương thức}: \texttt{dangNhap}/\texttt{dangXuat} (UC01/02); \texttt{themTaiKhoan} (UC03), \texttt{suaTaiKhoan} (UC04), \texttt{xoa}/\texttt{khoaMo} (UC05), \texttt{timKiem} (UC06), \texttt{layDanhSach} (UC07); \texttt{ghiLog}.
 
 \input{diagrams/tex/6.2_class_uc03}
 
-Giải thích sơ đồ: Cắt lát cấu trúc cho nhóm tài khoản: \texttt{NguoiDung} chứa thuộc tính và các operation CRUD + xác thực; \texttt{LichSuThaoTac} ghi vết. Quan hệ 1..* nghĩa là một người dùng có thể phát sinh nhiều log. Các lớp hàng/phiếu không xuất hiện vì không tham gia mục tiêu quản lý tài khoản.
+Giải thích: Cùng lớp \texttt{NguoiDung} phục vụ cả xác thực lẫn CRUD tài khoản. UC04--UC07 dùng lại cấu trúc này, chỉ khác operation. Sequence then chốt: UC01 (đăng nhập), UC03 (thêm TK).
 
-\subsection{UC13 -- Thêm hàng hóa}
+\subsection{Nhóm nhà cung cấp (UC08--UC12)}
 
-\textbf{Mục tiêu use case}: thêm mặt hàng và khởi tạo tồn.
+\textbf{Mục tiêu nhóm}: danh mục NCC phục vụ phiếu nhập -- đủ Thêm/Sửa/Xóa/Tìm/Xem DS.
 
-\textbf{Lớp tham gia}:
-\begin{itemize}[leftmargin=1.5cm]
-    \item \texttt{NguoiDung}: người thực hiện.
-    \item \texttt{HangHoa}: đối tượng được tạo.
-    \item \texttt{NhomHangHoa}, \texttt{DonViTinh}: tham chiếu bắt buộc khi tạo hàng.
-    \item \texttt{TonKho}, \texttt{Kho}: khởi tạo tồn = 0 tại từng kho.
-\end{itemize}
+\textbf{Lớp tham gia}: \texttt{NhaCungCap} (trung tâm), \texttt{NguoiDung} (actor), \texttt{PhieuNhapKho} (ràng buộc xóa), \texttt{LichSuThaoTac} (tùy chọn).
 
-\textbf{Quan hệ chính}: HangHoa thuộc 1 NhomHangHoa; đo bằng 1 DonViTinh; có nhiều TonKho (theo từng Kho).
+\textbf{Phương thức}: \texttt{themMoi} (UC08), \texttt{capNhat} (UC09), \texttt{xoa}/\texttt{ngungHoatDong} (UC10), \texttt{timKiem} (UC11), \texttt{layDanhSach} (UC12).
 
-\textbf{Phương thức liên quan}: \texttt{HangHoa.themHangHoa()}, \texttt{TonKho.khoiTaoTon()} / \texttt{capNhatTonKho()}; \texttt{HangHoa.timKiem()} dùng cho UC16.
+\input{diagrams/tex/4.7_class_ncc}
+
+Giải thích: CRUD NCC thao tác trên cùng lớp \texttt{NhaCungCap}. Quan hệ tới \texttt{PhieuNhapKho} giải thích vì sao UC10 có thể chỉ \textit{ngừng} thay vì xóa cứng. Sequence then chốt: UC08; UC09--12 cùng luồng boundary--control--entity, đổi tên operation.
+
+\subsection{Nhóm hàng hóa (UC13--UC17)}
+
+\textbf{Mục tiêu nhóm}: danh mục hàng; khi thêm khởi tạo tồn; tìm/xem có thể kèm tồn.
+
+\textbf{Lớp tham gia}: \texttt{HangHoa}, \texttt{NhomHangHoa}, \texttt{DonViTinh}, \texttt{TonKho}, \texttt{NguoiDung}.
+
+\textbf{Phương thức}: \texttt{themHangHoa}+\texttt{khoiTaoTon} (UC13), \texttt{capNhatThongTin} (UC14), \texttt{xoa}/\texttt{ngung} (UC15), \texttt{timKiem} (UC16), \texttt{layDanhSach} (UC17).
 
 \input{diagrams/tex/4.4_class_uc05}
 
-Giải thích sơ đồ: Cắt lát cấu trúc cho UC13. \texttt{HangHoa} ở giữa, quan hệ n..1 với \texttt{NhomHangHoa} và \texttt{DonViTinh} (mỗi hàng thuộc đúng một nhóm, một ĐVT). Quan hệ 1..* với \texttt{TonKho}: sau khi thêm hàng phải có dòng tồn theo kho. \texttt{NguoiDung} thể hiện actor thực hiện. Các operation trên \texttt{HangHoa} (\texttt{CapNhatThongTin}, \texttt{TimKiem}) và \texttt{TonKho.CapNhatTonKho} gắn với việc tạo và sau này tra cứu hàng.
+Giải thích: \texttt{HangHoa} trung tâm; n..1 với nhóm và ĐVT; 1..* với \texttt{TonKho}. UC14--17 không đổi cấu trúc lớp. Sequence then chốt: UC13 (ghi + khởi tạo tồn), UC16 (chỉ đọc).
 
-\subsection{UC23 -- Lập phiếu nhập kho}
+\subsection{Nhóm kho (UC18--UC22)}
 
-\textbf{Mục tiêu use case}: tạo phiếu nhập, chi tiết dòng hàng; khi duyệt cập nhật tồn.
+\textbf{Mục tiêu nhóm}: danh mục kho (chỉ QL kho); tồn gắn theo từng kho.
 
-\textbf{Lớp tham gia}: \texttt{NguoiDung}, \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{NhaCungCap}, \texttt{Kho}, \texttt{HangHoa}, \texttt{TonKho}.
+\textbf{Lớp tham gia}: \texttt{Kho}, \texttt{TonKho}, \texttt{HangHoa}, \texttt{NguoiDung}.
 
-\textbf{Quan hệ chính}:
-\begin{itemize}[leftmargin=1.5cm]
-    \item Một phiếu nhập có nhiều chi tiết (1..n).
-    \item Mỗi chi tiết tham chiếu một HangHoa.
-    \item Phiếu gắn một NhaCungCap, một Kho, một NguoiDung (người lập).
-    \item Khi duyệt: TonKho tại (Kho, HangHoa) được tăng.
-\end{itemize}
+\textbf{Phương thức}: \texttt{themMoi} (UC18), \texttt{capNhat} (UC19), \texttt{xoa}/\texttt{ngung} (UC20), \texttt{timKiem} (UC21), \texttt{layDanhSach} (UC22).
 
-\textbf{Phương thức liên quan}: \texttt{PhieuNhapKho.lapPhieuNhap()}, \texttt{themChiTiet}, \texttt{guiDuyet()}, \texttt{duyetPhieuNhap()} / \texttt{tuChoiPhieu()}; \texttt{TonKho.tangTon()}.
+\input{diagrams/tex/4.8_class_kho}
+
+Giải thích: \texttt{Kho} 1..* \texttt{TonKho}; mỗi dòng tồn trỏ một \texttt{HangHoa}. Xóa kho bị chặn nếu còn tồn/phiếu. Sequence then chốt: UC18.
+
+\subsection{Nhóm phiếu nhập (UC23--UC27)}
+
+\textbf{Mục tiêu nhóm}: lập/sửa/xóa/tìm/xem phiếu nhập; duyệt tăng tồn.
+
+\textbf{Lớp tham gia}: \texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{NhaCungCap}, \texttt{Kho}, \texttt{HangHoa}, \texttt{TonKho}, \texttt{NguoiDung}.
+
+\textbf{Phương thức}: \texttt{lapPhieu}/\texttt{themChiTiet}/\texttt{duyet} (UC23); sửa/xóa khi chưa duyệt (UC24--25); tìm/xem DS (UC26--27); \texttt{TonKho.tangTon} khi duyệt.
 
 \input{diagrams/tex/4.5_class_uc09}
 
-Giải thích sơ đồ: \texttt{PhieuNhapKho} là lớp trung tâm UC23 với operation \texttt{LapPhieuNhap}, \texttt{DuyetPhieuNhap}. Nó liên kết 1..* tới \texttt{ChiTietPhieuNhap}; mỗi chi tiết n..1 tới \texttt{HangHoa}. Phiếu phụ thuộc \texttt{NhaCungCap}, \texttt{Kho}, \texttt{NguoiDung}. \texttt{TonKho} nối Kho và HangHoa -- khi duyệt, phương thức cập nhật tồn được gọi. Sơ đồ giải thích \textit{vì sao} cần đủ các lớp này: thiếu chi tiết thì không biết nhập hàng gì; thiếu TonKho thì không cập nhật được số lượng sau duyệt.
+Giải thích: Master--detail phiếu--chi tiết; duyệt mới đụng \texttt{TonKho}. UC24--27 cùng cấu trúc, khác bước trạng thái/truy vấn. Sequence then chốt: UC23.
 
-\subsection{UC28 -- Lập phiếu xuất kho}
+\subsection{Nhóm phiếu xuất (UC28--UC32)}
 
-\textbf{Mục tiêu use case}: tạo phiếu xuất; kiểm tra tồn khi thêm dòng; duyệt thì giảm tồn.
+\textbf{Mục tiêu nhóm}: lập/sửa/xóa/tìm/xem phiếu xuất; kiểm tra tồn; duyệt giảm tồn.
 
-\textbf{Lớp tham gia}: \texttt{NguoiDung}, \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{Kho}, \texttt{HangHoa}, \texttt{TonKho}.
+\textbf{Lớp tham gia}: \texttt{PhieuXuatKho}, \texttt{ChiTietPhieuXuat}, \texttt{Kho}, \texttt{HangHoa}, \texttt{TonKho}, \texttt{NguoiDung} (không NCC/KH).
 
-\textbf{Quan hệ}: tương tự phiếu nhập (không có NCC/KH); TonKho kiểm tra và giảm số lượng.
-
-\textbf{Phương thức liên quan}: \texttt{PhieuXuatKho.lapPhieu()}, \texttt{themChiTiet} (kèm \texttt{TonKho.kiemTraDu}), \texttt{duyetPhieu()} $\rightarrow$ \texttt{TonKho.giamTon()}.
+\textbf{Phương thức}: \texttt{lapPhieu} + \texttt{kiemTraDu} (UC28); UC29--32 tương tự CRUD phiếu nhập; \texttt{giamTon} khi duyệt.
 
 \input{diagrams/tex/4.6_class_uc10}
 
-Giải thích sơ đồ: Cấu trúc tương tự UC23; \texttt{PhieuXuatKho} không gắn khách hàng. \texttt{TonKho} đóng hai vai: (1) \texttt{kiemTraDu} khi thêm dòng -- chặn xuất vượt tồn; (2) \texttt{giamTon} khi duyệt. \texttt{ChiTietPhieuXuat} lưu từng mặt hàng xuất. Sơ đồ làm rõ cấu trúc cần có để use case xuất vừa an toàn (không âm tồn) vừa truy vết được kho xuất và lý do xuất.
+Giải thích: Đối xứng nhóm nhập; \texttt{TonKho} vừa kiểm tra vừa giảm. Sequence then chốt: UC28.
+
+\subsection{Nhóm kiểm kê (UC33)}
+
+\textbf{Mục tiêu}: đối chiếu SL sổ / thực tế; duyệt thì gán lại tồn.
+
+\textbf{Lớp tham gia}: \texttt{PhieuKiemKe}, \texttt{ChiTietKiemKe}, \texttt{Kho}, \texttt{HangHoa}, \texttt{TonKho}, \texttt{NguoiDung}.
+
+\input{diagrams/tex/4.9_class_kiemke}
+
+Giải thích: Master--detail kiểm kê; \texttt{ganTheoKiemKe} chỉ sau duyệt. Sequence: UC33.
+
+\subsection{Nhóm báo cáo NXT (UC34)}
+
+\textbf{Mục tiêu}: tổng hợp nhập--xuất--tồn theo kỳ/kho/hàng (chỉ đọc).
+
+\textbf{Lớp tham gia}: lớp báo cáo (logic tổng hợp) + đọc \texttt{PhieuNhapKho}, \texttt{PhieuXuatKho}, \texttt{TonKho}, \texttt{HangHoa}, \texttt{Kho}.
+
+\input{diagrams/tex/4.10_class_baocao}
+
+Giải thích: Không tạo entity giao dịch mới; chỉ \textbf{đọc} phiếu đã duyệt và tồn. Sequence: UC34.
 
 \section{Bảng mô tả thuộc tính các lớp}
 
@@ -410,4 +461,4 @@ Ngoài thuộc tính (dữ liệu), mỗi lớp có \textbf{phương thức} (h�
 
 \section{Kết luận chương}
 
-Chương 4 hoàn thành \textbf{phân tích cấu trúc} bằng biểu đồ lớp: đã nêu lớp, \textbf{thuộc tính}, \textbf{phương thức} và quan hệ. Các phương thức chính sẽ xuất hiện lại dưới dạng lời gọi thông điệp trên \textbf{biểu đồ trình tự} (Ch.5 -- phân tích hành vi).
+Chương 4 hoàn thành \textbf{phân tích cấu trúc} bằng biểu đồ lớp: lớp tổng thể (danh mục, nhập--xuất, kiểm kê) và \textbf{8 cắt lát theo nhóm entity} (tài khoản, NCC, hàng, kho, phiếu nhập, phiếu xuất, kiểm kê, báo cáo) phủ toàn bộ UC01--UC34. Thuộc tính, phương thức và quan hệ đã nêu; phương thức then chốt xuất hiện lại trên \textbf{biểu đồ trình tự} (Ch.5).

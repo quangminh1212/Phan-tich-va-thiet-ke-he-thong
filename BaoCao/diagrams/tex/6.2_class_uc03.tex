@@ -10,8 +10,12 @@
 \attribute{+ HoTen: String}
 \attribute{+ VaiTro: String}
 \attribute{+ TrangThai: String}
-\operation{+ dangNhap()}
+\operation{+ dangNhap() / dangXuat()}
 \operation{+ themTaiKhoan()}
+\operation{+ suaTaiKhoan()}
+\operation{+ xoa / khoaMoTaiKhoan()}
+\operation{+ timKiemTaiKhoan()}
+\operation{+ layDanhSachTaiKhoan()}
 \end{class}
 
 \begin{class}{LichSuThaoTac}{4,2}
@@ -19,12 +23,13 @@
 \attribute{+ MaNguoiDung: String}
 \attribute{+ HanhDong: String}
 \attribute{+ ThoiGian: DateTime}
+\operation{+ ghiLog()}
 \end{class}
 
 \draw (NguoiDung) -- (LichSuThaoTac) node[midway, above, font=\tiny] {1..*};
 
 \end{tikzpicture}
 }
-\caption{Class trong UC03--UC07 -- Quản lý tài khoản}
+\caption{Biểu đồ lớp theo nhóm entity -- Tài khoản / xác thực (UC01--UC07)}
 \label{fig:class-uc03}
 \end{figure}

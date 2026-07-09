@@ -1,0 +1,35 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{ql}{Quản lý kho}
+\newinst[2]{gd}{Giao diện báo cáo}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{ql}{1. Mở báo cáo NXT}{gd}{Form điều kiện}
+\end{call}
+
+\begin{call}{ql}{2. Chọn kỳ, kho, hàng (tùy chọn)}{gd}{}
+\end{call}
+
+\begin{call}{gd}{3. Gửi điều kiện báo cáo}{ht}{}
+  \begin{call}{ht}{4. Tổng hợp phiếu nhập đã duyệt}{db}{Dữ liệu nhập}
+  \end{call}
+  \begin{call}{ht}{5. Tổng hợp phiếu xuất đã duyệt}{db}{Dữ liệu xuất}
+  \end{call}
+  \begin{call}{ht}{6. Lấy tồn hiện tại (TonKho)}{db}{Dữ liệu tồn}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{7. Trả bảng NXT}{gd}{}
+\end{call}
+
+\begin{call}{gd}{8. Hiển thị / xuất Excel}{ql}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC34 -- Xem báo cáo nhập xuất tồn}
+\label{fig:sequence-uc34}
+\end{figure}

@@ -1,0 +1,47 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{nv}{Nhân viên kho}
+\newinst[1.5]{ql}{Quản lý kho}
+\newinst[1.5]{gd}{Giao diện kiểm kê}
+\newinst[1.5]{ht}{Hệ thống}
+\newinst[1.5]{db}{CSDL}
+
+\begin{call}{nv}{1. Tạo phiếu kiểm kê (chọn kho)}{gd}{}
+\end{call}
+
+\begin{call}{gd}{2. Yêu cầu tạo phiếu}{ht}{}
+  \begin{call}{ht}{3. Nạp SL sổ từ TonKho}{db}{Danh sách dòng}
+  \end{call}
+  \begin{call}{ht}{4. Lưu PhieuKiemKe + chi tiết}{db}{Xác nhận}
+  \end{call}
+\end{call}
+
+\begin{call}{nv}{5. Nhập số lượng thực tế}{gd}{}
+\end{call}
+
+\begin{call}{gd}{6. Cập nhật chi tiết, tính chênh lệch}{ht}{}
+  \begin{call}{ht}{7. Lưu ChiTietKiemKe}{db}{}
+  \end{call}
+\end{call}
+
+\begin{call}{nv}{8. Gửi duyệt}{gd}{}
+\end{call}
+
+\begin{call}{ql}{9. Duyệt điều chỉnh tồn}{gd}{}
+\end{call}
+
+\begin{call}{gd}{10. Xác nhận duyệt}{ht}{}
+  \begin{call}{ht}{11. ganTheoKiemKe (cập nhật TonKho)}{db}{Xác nhận}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{12. Thông báo hoàn tất}{gd}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC33 -- Lập phiếu kiểm kê}
+\label{fig:sequence-uc33}
+\end{figure}

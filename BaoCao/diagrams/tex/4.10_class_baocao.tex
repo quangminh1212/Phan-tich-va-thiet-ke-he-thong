@@ -1,0 +1,55 @@
+\begin{figure}[H]
+\centering
+\makebox[\textwidth][c]{%
+\begin{tikzpicture}[scale=0.8, transform shape, every class/.style={text width=5.2cm}]
+
+\begin{class}{BaoCaoNXT}{0,2}
+\attribute{+ TuNgay: Date}
+\attribute{+ DenNgay: Date}
+\attribute{+ MaKho: String}
+\attribute{+ MaHang: String}
+\operation{+ tongHopNhap()}
+\operation{+ tongHopXuat()}
+\operation{+ layTonHienTai()}
+\operation{+ xuatExcel()}
+\end{class}
+
+\begin{class}{PhieuNhapKho}{-6.5,0}
+\attribute{+ MaPhieuNhap: String}
+\attribute{+ NgayNhap: DateTime}
+\attribute{+ TrangThai: String}
+\end{class}
+
+\begin{class}{PhieuXuatKho}{6.5,0}
+\attribute{+ MaPhieuXuat: String}
+\attribute{+ NgayXuat: DateTime}
+\attribute{+ TrangThai: String}
+\end{class}
+
+\begin{class}{TonKho}{-3.5,-4.5}
+\attribute{+ MaKho: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuongTon: Integer}
+\end{class}
+
+\begin{class}{HangHoa}{3.5,-4.5}
+\attribute{+ MaHangHoa: String}
+\attribute{+ TenHangHoa: String}
+\end{class}
+
+\begin{class}{Kho}{0,-4.5}
+\attribute{+ MaKho: String}
+\attribute{+ TenKho: String}
+\end{class}
+
+\draw (BaoCaoNXT) -- (PhieuNhapKho) node[midway, left, font=\tiny] {đọc};
+\draw (BaoCaoNXT) -- (PhieuXuatKho) node[midway, right, font=\tiny] {đọc};
+\draw (BaoCaoNXT) -- (TonKho) node[midway, left, font=\tiny] {đọc};
+\draw (TonKho) -- (HangHoa) node[midway, above, font=\tiny] {};
+\draw (TonKho) -- (Kho) node[midway, above, font=\tiny] {};
+
+\end{tikzpicture}
+}
+\caption{Biểu đồ lớp theo nhóm entity -- Báo cáo nhập--xuất--tồn (UC34)}
+\label{fig:class-baocao}
+\end{figure}

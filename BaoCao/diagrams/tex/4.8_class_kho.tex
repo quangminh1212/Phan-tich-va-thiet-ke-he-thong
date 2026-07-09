@@ -1,0 +1,44 @@
+\begin{figure}[H]
+\centering
+\makebox[\textwidth][c]{%
+\begin{tikzpicture}[scale=0.8, transform shape, every class/.style={text width=5.5cm}]
+
+\begin{class}{Kho}{0,0}
+\attribute{+ MaKho: String}
+\attribute{+ TenKho: String}
+\attribute{+ DiaChi: String}
+\attribute{+ NguoiPhuTrach: String}
+\attribute{+ TrangThai: String}
+\operation{+ themMoi()}
+\operation{+ capNhat()}
+\operation{+ xoa() / ngungHoatDong()}
+\operation{+ timKiem()}
+\operation{+ layDanhSach()}
+\end{class}
+
+\begin{class}{TonKho}{6.5,0}
+\attribute{+ MaKho: String}
+\attribute{+ MaHangHoa: String}
+\attribute{+ SoLuongTon: Integer}
+\operation{+ layTon()}
+\end{class}
+
+\begin{class}{NguoiDung}{-6.5,0}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ VaiTro: String}
+\end{class}
+
+\begin{class}{HangHoa}{6.5,-5}
+\attribute{+ MaHangHoa: String}
+\attribute{+ TenHangHoa: String}
+\end{class}
+
+\draw (Kho) -- (TonKho) node[midway, above, font=\tiny] {1..*};
+\draw (TonKho) -- (HangHoa) node[midway, right, font=\tiny] {n..1};
+\draw (NguoiDung) -- (Kho) node[midway, above, font=\tiny] {QL kho};
+
+\end{tikzpicture}
+}
+\caption{Biểu đồ lớp theo nhóm entity -- Kho (UC18--UC22)}
+\label{fig:class-kho}
+\end{figure}

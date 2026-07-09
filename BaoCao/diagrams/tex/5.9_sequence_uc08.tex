@@ -1,0 +1,33 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{nv}{Nhân viên / QL kho}
+\newinst[2]{gd}{Giao diện NCC}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{nv}{1. Chọn thêm nhà cung cấp}{gd}{Hiển thị form}
+\end{call}
+
+\begin{call}{nv}{2. Nhập thông tin NCC}{gd}{}
+\end{call}
+
+\begin{call}{gd}{3. Gửi thông tin NCC}{ht}{}
+  \begin{call}{ht}{4. Kiểm tra dữ liệu / trùng mã}{db}{Kết quả}
+  \end{call}
+  \begin{call}{ht}{5. Lưu NhaCungCap}{db}{Xác nhận}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{6. Trả kết quả}{gd}{Thông báo thành công}
+\end{call}
+
+\begin{call}{gd}{7. Hiển thị danh sách NCC}{nv}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC08 -- Thêm nhà cung cấp}
+\label{fig:sequence-uc08}
+\end{figure}

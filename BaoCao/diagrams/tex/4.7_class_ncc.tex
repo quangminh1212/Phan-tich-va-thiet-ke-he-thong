@@ -1,0 +1,45 @@
+\begin{figure}[H]
+\centering
+\makebox[\textwidth][c]{%
+\begin{tikzpicture}[scale=0.8, transform shape, every class/.style={text width=5.5cm}]
+
+\begin{class}{NhaCungCap}{0,0}
+\attribute{+ MaNhaCungCap: String}
+\attribute{+ TenNhaCungCap: String}
+\attribute{+ DiaChi: String}
+\attribute{+ SoDienThoai: String}
+\attribute{+ Email: String}
+\attribute{+ TrangThai: String}
+\operation{+ themMoi()}
+\operation{+ capNhat()}
+\operation{+ xoa() / ngungHoatDong()}
+\operation{+ timKiem()}
+\operation{+ layDanhSach()}
+\end{class}
+
+\begin{class}{NguoiDung}{-6.5,0}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ VaiTro: String}
+\end{class}
+
+\begin{class}{PhieuNhapKho}{6.5,0}
+\attribute{+ MaPhieuNhap: String}
+\attribute{+ MaNhaCungCap: String}
+\attribute{+ NgayNhap: DateTime}
+\end{class}
+
+\begin{class}{LichSuThaoTac}{0,-5}
+\attribute{+ MaLog: String}
+\attribute{+ HanhDong: String}
+\attribute{+ ThoiGian: DateTime}
+\end{class}
+
+\draw (NguoiDung) -- (NhaCungCap) node[midway, above, font=\tiny] {thao tác};
+\draw (NhaCungCap) -- (PhieuNhapKho) node[midway, above, font=\tiny] {1..*};
+\draw (NguoiDung) -- (LichSuThaoTac) node[midway, left, font=\tiny] {1..*};
+
+\end{tikzpicture}
+}
+\caption{Biểu đồ lớp theo nhóm entity -- Nhà cung cấp (UC08--UC12)}
+\label{fig:class-ncc}
+\end{figure}

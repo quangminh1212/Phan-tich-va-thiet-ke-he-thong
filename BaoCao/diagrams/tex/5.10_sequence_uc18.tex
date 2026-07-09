@@ -1,0 +1,33 @@
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sequencediagram}
+\newinst{ql}{Quản lý kho}
+\newinst[2]{gd}{Giao diện kho}
+\newinst[2]{ht}{Hệ thống}
+\newinst[2]{db}{Cơ sở dữ liệu}
+
+\begin{call}{ql}{1. Chọn thêm kho}{gd}{Hiển thị form}
+\end{call}
+
+\begin{call}{ql}{2. Nhập mã, tên, địa chỉ, phụ trách}{gd}{}
+\end{call}
+
+\begin{call}{gd}{3. Gửi thông tin kho}{ht}{}
+  \begin{call}{ht}{4. Kiểm tra trùng mã kho}{db}{Kết quả}
+  \end{call}
+  \begin{call}{ht}{5. Lưu Kho}{db}{Xác nhận}
+  \end{call}
+\end{call}
+
+\begin{call}{ht}{6. Trả kết quả}{gd}{Thông báo thành công}
+\end{call}
+
+\begin{call}{gd}{7. Hiển thị danh sách kho}{ql}{}
+\end{call}
+
+\end{sequencediagram}
+}
+\caption{Sequence diagram UC18 -- Thêm kho}
+\label{fig:sequence-uc18}
+\end{figure}

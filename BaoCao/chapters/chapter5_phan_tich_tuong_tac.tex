@@ -2,86 +2,147 @@
 
 \section{Phân tích hành vi bằng biểu đồ trình tự}
 
-Sau phân tích chức năng (use case) và cấu trúc (lớp), chương này dùng \textbf{biểu đồ trình tự (Sequence)} để mô tả các đối tượng tương tác theo thời gian khi thực hiện use case. Mỗi sơ đồ gắn một use case đã đặc tả: actor, giao diện, phần xử lý và dữ liệu.
+Sau phân tích chức năng (use case) và cấu trúc (lớp theo nhóm entity ở Ch.4), chương này dùng \textbf{biểu đồ trình tự (Sequence)} để mô tả đối tượng tương tác theo thời gian.
+
+\textbf{Nguyên tắc chọn UC vẽ sequence} (hướng trung gian -- mỗi nhóm entity một/hai UC then chốt):
+\begin{itemize}[leftmargin=1.5cm]
+    \item Mỗi nhóm entity ở mục 4.4 có \textbf{ít nhất một} sequence then chốt.
+    \item CRUD còn lại (sửa/xóa/tìm/xem DS) \textbf{cùng cấu trúc lớp} và cùng mẫu luồng boundary $\rightarrow$ control $\rightarrow$ entity; chỉ đổi tên thông điệp/phương thức -- không vẽ lặp toàn bộ.
+    \item Ưu tiên UC có hành vi đặc thù: xác thực, thêm có phụ hiệu ứng (khởi tạo tồn), tìm (chỉ đọc), phiếu (duyệt + tồn), kiểm kê, báo cáo.
+\end{itemize}
 
 \subsection{UC01 -- Đăng nhập}
 
-\textbf{Bối cảnh}: Actor muốn vào hệ thống. Đây là hành vi xác thực -- điều kiện để thực hiện các use case nghiệp vụ.
+\textbf{Bối cảnh}: Actor muốn vào hệ thống. Điều kiện để thực hiện các use case nghiệp vụ.
 
-\textbf{Đối tượng tham gia}:
-\begin{itemize}[leftmargin=1.5cm]
-    \item Người dùng (actor);
-    \item Giao diện đăng nhập (boundary);
-    \item Thành phần xử lý xác thực (control/hệ thống);
-    \item Cơ sở dữ liệu / lớp \texttt{NguoiDung} (entity).
-\end{itemize}
+\textbf{Đối tượng tham gia}: Người dùng; giao diện đăng nhập (boundary); xử lý xác thực (control); CSDL / \texttt{NguoiDung} (entity).
 
-\textbf{Kịch bản chính}: Mở form $\rightarrow$ nhập tên/mật khẩu $\rightarrow$ hệ thống kiểm tra CSDL $\rightarrow$ tạo phiên hoặc báo lỗi $\rightarrow$ chuyển trang chủ nếu thành công.
+\textbf{Kịch bản chính}: Mở form $\rightarrow$ nhập tên/mật khẩu $\rightarrow$ kiểm tra CSDL $\rightarrow$ tạo phiên hoặc báo lỗi $\rightarrow$ trang chủ nếu thành công.
+
+\textbf{Cùng nhóm}: UC02 Đăng xuất -- hủy phiên, không kiểm tra mật khẩu (luồng ngắn hơn, cùng lớp \texttt{NguoiDung}).
 
 \input{diagrams/tex/5.7_sequence_uc01}
 
-Giải thích sơ đồ: Trục đứng là các đối tượng (Người dùng, Giao diện đăng nhập, Hệ thống, CSDL); trục thời gian đi từ trên xuống. Mũi tên ngang là thông điệp: (1)--(2) actor thao tác form; (3) giao diện gửi thông tin đăng nhập cho hệ thống; (4) hệ thống hỏi CSDL kiểm tra tài khoản; (5)--(6) trả kết quả và hiển thị trang chủ hoặc lỗi. Sơ đồ chứng minh hành vi UC01 là chuỗi tương tác \textit{boundary $\rightarrow$ control $\rightarrow$ entity}, không chỉ là ``màn hình login''.
+Giải thích sơ đồ: Trục đứng là đối tượng; trục thời gian từ trên xuống. Thông điệp: actor thao tác form $\rightarrow$ giao diện gửi hệ thống $\rightarrow$ hỏi CSDL $\rightarrow$ trả kết quả. Hành vi UC01 là chuỗi boundary $\rightarrow$ control $\rightarrow$ entity.
+
+\subsection{UC03 -- Thêm tài khoản}
+
+\textbf{Bối cảnh}: QTV tạo tài khoản mới (vai trò QTV / QL / NV).
+
+\textbf{Đối tượng tham gia}: QTV; giao diện tài khoản; hệ thống; CSDL (\texttt{NguoiDung}, log).
+
+\textbf{Kịch bản chính}: Form thêm $\rightarrow$ kiểm tra trùng tên $\rightarrow$ mã hóa MK, lưu $\rightarrow$ ghi log $\rightarrow$ làm mới DS.
+
+\textbf{Cùng nhóm (UC04--UC07)}: Sửa/xóa/tìm/xem DS cùng 4 lifeline; đổi thông điệp thành \texttt{suaTaiKhoan}, \texttt{xoa}/\texttt{khoaMo}, \texttt{timKiem}, \texttt{layDanhSach}.
+
+\input{diagrams/tex/5.8_sequence_uc03}
+
+Giải thích: Sequence CRUD danh mục điển hình. Khác UC01 ở chỗ \textbf{ghi} dữ liệu mới và có bước kiểm tra trùng trước khi lưu.
+
+\subsection{UC08 -- Thêm nhà cung cấp}
+
+\textbf{Bối cảnh}: NV/QL bổ sung NCC phục vụ phiếu nhập.
+
+\textbf{Đối tượng}: Actor kho; giao diện NCC; hệ thống; CSDL \texttt{NhaCungCap}.
+
+\textbf{Cùng nhóm (UC09--UC12)}: cùng mẫu; UC10 thêm nhánh ``đã có phiếu nhập $\rightarrow$ chỉ ngừng hoạt động''.
+
+\input{diagrams/tex/5.9_sequence_uc08}
+
+Giải thích: Luồng danh mục đối tác -- validate rồi insert. Không đụng \texttt{TonKho}.
 
 \subsection{UC13 -- Thêm hàng hóa}
 
-\textbf{Bối cảnh}: NV/QL thêm mặt hàng mới; hệ thống phải vừa lưu danh mục vừa khởi tạo tồn.
+\textbf{Bối cảnh}: Thêm mặt hàng; đồng thời khởi tạo tồn.
 
-\textbf{Đối tượng tham gia}: Nhân viên kho, giao diện hàng hóa, xử lý nghiệp vụ hàng hóa, CSDL (\texttt{HangHoa}, \texttt{TonKho}).
+\textbf{Đối tượng}: NV/QL; giao diện hàng; hệ thống; CSDL (\texttt{HangHoa}, \texttt{TonKho}).
 
 \textbf{Kịch bản chính}:
 \begin{enumerate}[leftmargin=1.5cm]
-    \item Actor chọn thêm hàng, nhập thông tin trên form.
-    \item Giao diện gửi dữ liệu cho hệ thống.
-    \item Hệ thống kiểm tra mã/trùng/lệ thuộc nhóm--ĐVT.
+    \item Actor chọn thêm hàng, nhập form.
+    \item Hệ thống kiểm tra mã/trùng/nhóm--ĐVT.
     \item Lưu \texttt{HangHoa}; tạo \texttt{TonKho} = 0 các kho.
-    \item Trả thông báo và làm mới danh sách.
+    \item Thông báo và làm mới danh sách.
 \end{enumerate}
+
+\textbf{Cùng nhóm}: UC14 Sửa (không tạo tồn mới); UC15 Xóa/ngừng; UC17 Xem DS -- cùng lớp, đổi operation.
 
 \input{diagrams/tex/5.1_sequence_uc05}
 
-Giải thích sơ đồ: Sequence thể hiện thứ tự: NV chọn quản lý hàng hóa $\rightarrow$ nhập thông tin $\rightarrow$ giao diện gửi hệ thống $\rightarrow$ kiểm tra dữ liệu $\rightarrow$ lưu \texttt{HangHoa} xuống CSDL $\rightarrow$ cập nhật/tạo tồn ban đầu $\rightarrow$ trả thông báo thành công $\rightarrow$ hiển thị lại danh sách. Các lời gọi lồng nhau (hệ thống $\rightarrow$ CSDL) cho thấy bước lưu và khởi tạo tồn là hai thao tác dữ liệu tuần tự sau khi validate.
+Giải thích: Sau validate có \textbf{hai} thao tác CSDL tuần tự: lưu hàng rồi khởi tạo tồn -- đặc thù so với CRUD danh mục thuần (NCC, kho).
 
 \subsection{UC16 -- Tìm kiếm hàng hóa}
 
-\textbf{Bối cảnh}: Tra cứu không làm thay đổi dữ liệu; nhấn mạnh luồng đọc (query) từ \texttt{HangHoa} và \texttt{TonKho}.
+\textbf{Bối cảnh}: Tra cứu chỉ đọc; có thể ghép tồn.
 
-\textbf{Đối tượng tham gia}: Người dùng, giao diện tìm kiếm, hệ thống, CSDL.
+\textbf{Đối tượng}: Người dùng; giao diện tìm; hệ thống; CSDL.
 
-\textbf{Kịch bản chính}: Nhập điều kiện $\rightarrow$ truy vấn $\rightarrow$ ghép thông tin tồn $\rightarrow$ hiển thị (hoặc thông báo không có dữ liệu).
+\textbf{Cùng nhóm}: UC11/UC21/UC26/UC31 (tìm NCC/kho/phiếu) cùng mẫu query.
 
 \input{diagrams/tex/5.2_sequence_uc06}
 
-Giải thích sơ đồ: Đây là luồng \textbf{chỉ đọc}. Actor gửi điều kiện tìm; hệ thống truy vấn CSDL lấy danh sách hàng rồi lấy tồn tương ứng; kết quả trả về giao diện. Không có bước ``Lưu'' thay đổi nghiệp vụ. So với UC13, sequence này ngắn hơn và không có nhánh cập nhật tồn.
+Giải thích: Luồng \textbf{chỉ đọc}. So với UC13: không có bước ``Lưu'' / cập nhật tồn.
+
+\subsection{UC18 -- Thêm kho}
+
+\textbf{Bối cảnh}: QL kho tạo kho mới (QTV không thực hiện nhóm này).
+
+\textbf{Đối tượng}: QL kho; giao diện kho; hệ thống; CSDL \texttt{Kho}.
+
+\textbf{Cùng nhóm (UC19--UC22)}: CRUD kho; UC20 chặn xóa nếu còn tồn/phiếu.
+
+\input{diagrams/tex/5.10_sequence_uc18}
+
+Giải thích: Mẫu danh mục tương tự UC08; actor chỉ QL kho.
 
 \subsection{UC23 -- Lập phiếu nhập kho}
 
-\textbf{Bối cảnh}: Có hai actor theo thời gian: NV lập phiếu trước, QL duyệt sau. Hành vi cập nhật tồn chỉ xảy ra ở nhánh duyệt.
+\textbf{Bối cảnh}: NV lập phiếu (có thể kèm gửi duyệt); QL duyệt thì tăng tồn.
 
-\textbf{Đối tượng tham gia}: NV kho, QL kho, giao diện phiếu nhập, hệ thống, CSDL (\texttt{PhieuNhapKho}, \texttt{ChiTietPhieuNhap}, \texttt{TonKho}, \texttt{LichSuThaoTac}).
+\textbf{Đối tượng}: NV, QL; giao diện phiếu nhập; hệ thống; CSDL phiếu, chi tiết, tồn, log.
 
 \textbf{Kịch bản chính}:
 \begin{enumerate}[leftmargin=1.5cm]
-    \item NV tạo phiếu, thêm dòng chi tiết, gửi duyệt (trạng thái Chờ duyệt).
-    \item QL mở phiếu, chọn duyệt hoặc từ chối.
-    \item Nếu duyệt: cập nhật trạng thái, cộng tồn, ghi log.
-    \item Nếu từ chối: giữ tồn, lưu lý do.
+    \item NV tạo phiếu, thêm dòng, gửi duyệt (Chờ duyệt).
+    \item QL duyệt hoặc từ chối.
+    \item Duyệt: cập nhật trạng thái, \texttt{tangTon}, ghi log.
 \end{enumerate}
+
+\textbf{Cùng nhóm}: UC24--25 sửa/xóa khi chưa duyệt; UC26--27 tìm/xem DS (query).
 
 \input{diagrams/tex/5.3_sequence_uc09}
 
-Giải thích sơ đồ: Sequence có \textbf{hai actor theo thời gian}: NV tạo phiếu và gửi duyệt trước; QL xuất hiện ở bước duyệt. Các thông điệp thể hiện lưu phiếu/chi tiết (trạng thái Chờ duyệt), rồi nhánh duyệt: cập nhật trạng thái, gọi cập nhật \texttt{TonKho} (tăng), ghi log. Nhánh từ chối (nếu có trên sơ đồ/mô tả) không gọi tăng tồn. Sơ đồ gắn hành vi với cấu trúc lớp phiếu--chi tiết--tồn đã nêu ở Ch.4.
+Giải thích: Hành vi gắn master--detail và tồn. Nhánh từ chối không gọi tăng tồn.
 
 \subsection{UC28 -- Lập phiếu xuất kho}
 
-\textbf{Bối cảnh}: Tương tự nhập nhưng có thêm tương tác kiểm tra tồn trước khi chấp nhận dòng hàng; duyệt thì trừ tồn.
+\textbf{Bối cảnh}: Giống nhập nhưng kiểm tra tồn trước khi nhận dòng; duyệt giảm tồn.
 
-\textbf{Đối tượng tham gia}: NV, QL, giao diện phiếu xuất, hệ thống, CSDL phiếu xuất và tồn kho.
-
-\textbf{Kịch bản chính}: Tạo phiếu $\rightarrow$ thêm dòng (kiểm tra tồn) $\rightarrow$ gửi duyệt $\rightarrow$ QL duyệt $\rightarrow$ giảm tồn + log.
+\textbf{Cùng nhóm}: UC29--32 tương tự CRUD phiếu nhập.
 
 \input{diagrams/tex/5.4_sequence_uc10}
 
-Giải thích sơ đồ: Khác UC23 ở chỗ trước khi chấp nhận dòng hàng, hệ thống phải \textbf{hỏi tồn} (\texttt{kiemTraDu}). Chỉ khi đủ, chi tiết mới được lưu. Sau duyệt, thông điệp cập nhật tồn theo hướng \textbf{giảm}. Sequence làm rõ ràng buộc an toàn: không cho xuất vượt số lượng hiện có.
+Giải thích: Trước khi lưu dòng hàng, hệ thống \textbf{hỏi tồn} (\texttt{kiemTraDu}). Duyệt $\rightarrow$ \texttt{giamTon}.
+
+\subsection{UC33 -- Lập phiếu kiểm kê}
+
+\textbf{Bối cảnh}: NV tạo phiếu theo kho, nhập SL thực tế; QL duyệt điều chỉnh tồn.
+
+\textbf{Đối tượng}: NV, QL; giao diện KK; hệ thống; CSDL phiếu KK, chi tiết, \texttt{TonKho}.
+
+\input{diagrams/tex/5.11_sequence_uc33}
+
+Giải thích: Nạp SL sổ từ \texttt{TonKho} $\rightarrow$ nhập thực tế $\rightarrow$ chênh lệch $\rightarrow$ duyệt mới \texttt{ganTheoKiemKe}. Tồn không đổi ngay khi nhập số liệu đếm.
+
+\subsection{UC34 -- Xem báo cáo nhập xuất tồn}
+
+\textbf{Bối cảnh}: QL xem tổng hợp NXT theo điều kiện; có thể xuất Excel.
+
+\textbf{Đối tượng}: QL; giao diện báo cáo; hệ thống; CSDL (đọc phiếu + tồn).
+
+\input{diagrams/tex/5.12_sequence_uc34}
+
+Giải thích: Toàn bộ là \textbf{đọc/tổng hợp} -- không insert phiếu. Khác UC16 ở chỗ gộp nhiều nguồn (nhập + xuất + tồn) theo kỳ.
 
 \section{Phân tích hành vi đối tượng phiếu (biểu đồ trạng thái)}
 
@@ -89,29 +150,34 @@ Sequence mô tả tương tác \textbf{giữa} các đối tượng; state machi
 
 \subsection{Phiếu nhập kho}
 
-Trạng thái điển hình: Mới tạo $\rightarrow$ Chờ duyệt $\rightarrow$ Đã duyệt / Từ chối; có thể Hủy khi được phép. Chỉ ở ``Đã duyệt'' mới làm thay đổi tồn kho.
+Trạng thái điển hình: Mới tạo $\rightarrow$ Chờ duyệt $\rightarrow$ Đã duyệt / Từ chối; có thể Hủy khi được phép. Chỉ ``Đã duyệt'' mới làm thay đổi tồn kho.
 
 \input{diagrams/tex/5.5_state_phieu_nhap}
 
-Giải thích sơ đồ: Hình tròn/oval (hoặc bo tròn) là các \textbf{trạng thái} của một phiếu nhập. Mũi tên là \textbf{sự kiện chuyển trạng thái}: gửi duyệt, duyệt, từ chối, hủy. Ý nghĩa: ở ``Chờ duyệt'' phiếu không được sửa tùy tiện; ``Đã duyệt'' là trạng thái kết thúc nghiệp vụ thành công và là điều kiện để tăng tồn; ``Từ chối'' kết thúc mà không đụng tồn. State bổ sung cho sequence: sequence nói \textit{ai gọi ai}, state nói \textit{phiếu đang ở pha nào}.
+Giải thích sơ đồ: Hình tròn/oval là \textbf{trạng thái}; mũi tên là \textbf{sự kiện chuyển}. ``Chờ duyệt'' hạn chế sửa; ``Đã duyệt'' điều kiện tăng tồn; ``Từ chối'' kết thúc không đụng tồn.
 
 \subsection{Phiếu xuất kho}
 
-Cùng mô hình trạng thái với phiếu nhập (Mới tạo, Chờ duyệt, Đã duyệt, Từ chối, Hủy).
+Cùng mô hình trạng thái với phiếu nhập.
 
 \input{diagrams/tex/5.6_state_phieu_xuat}
 
-Giải thích sơ đồ: Máy trạng thái phiếu xuất \textbf{đối xứng} phiếu nhập: cùng các trạng thái và sự kiện chuyển. Khác biệt nghiệp vụ nằm ở hành động kèm theo khi vào ``Đã duyệt'' (giảm tồn thay vì tăng), không nằm ở hình dạng sơ đồ trạng thái.
+Giải thích: Đối xứng phiếu nhập; khi vào ``Đã duyệt'' thì \textbf{giảm} tồn thay vì tăng.
 
 \section{Kết luận chương}
 
-Chương 5 hoàn thành \textbf{phân tích hành vi} bằng \textbf{biểu đồ trình tự} (và state bổ sung).
+Chương 5 hoàn thành \textbf{phân tích hành vi}:
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{10 sequence then chốt} phủ 8 nhóm entity (UC01, 03, 08, 13, 16, 18, 23, 28, 33, 34);
+    \item CRUD còn lại cùng mẫu luồng, không vẽ trùng;
+    \item State bổ sung cho vòng đời phiếu nhập/xuất.
+\end{itemize}
 
 Tổng kết ba giai đoạn:
 \begin{enumerate}[leftmargin=1.5cm]
-    \item \textbf{Chức năng} (Ch.3): phân tích bằng Use Case;
-    \item \textbf{Cấu trúc} (Ch.4): phân tích bằng Class;
-    \item \textbf{Hành vi} (Ch.5): phân tích bằng Sequence.
+    \item \textbf{Chức năng} (Ch.3): Use Case;
+    \item \textbf{Cấu trúc} (Ch.4): Class (tổng thể + theo nhóm entity);
+    \item \textbf{Hành vi} (Ch.5): Sequence (+ State).
 \end{enumerate}
 
 Tiếp theo: thiết kế chi tiết (Ch.6) và CSDL/giao diện (Ch.7).
