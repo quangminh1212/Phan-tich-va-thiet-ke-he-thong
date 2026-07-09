@@ -1,0 +1,32 @@
+\babel@toc {vietnamese}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Activity -- UC23 Lập phiếu nhập kho}}{12}{figure.caption.1}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Activity -- UC28 Lập phiếu xuất kho}}{13}{figure.caption.2}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Activity -- UC33 Lập phiếu kiểm kê}}{14}{figure.caption.3}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Sơ đồ use case tổng quát (nhóm chức năng)}}{16}{figure.caption.4}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Use case phân rã -- Xác thực (UC01--02) và tài khoản (UC03--07: Thêm/Sửa/Xóa/Tìm/Xem DS)}}{17}{figure.caption.5}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Use case phân rã -- NCC (Thêm/Sửa/Xóa/Tìm/Xem DS)}}{17}{figure.caption.6}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Use case phân rã -- Hàng hóa (UC13--17) và Kho (UC18--22)}}{18}{figure.caption.7}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Use case phân rã -- PN (UC23--27), PX (UC28--32), KK (UC33), BC (UC34)}}{18}{figure.caption.8}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Sơ đồ lớp danh mục (Master Data)}}{37}{figure.caption.9}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Sơ đồ lớp nghiệp vụ nhập xuất kho}}{38}{figure.caption.10}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Sơ đồ lớp kiểm kê và lịch sử thao tác}}{38}{figure.caption.11}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Class trong UC03--UC07 -- Quản lý tài khoản}}{39}{figure.caption.12}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Biểu đồ lớp trong ca sử dụng UC13 -- Thêm hàng hóa}}{40}{figure.caption.13}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Biểu đồ lớp trong ca sử dụng UC23 -- Lập phiếu nhập kho}}{41}{figure.caption.14}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Biểu đồ lớp trong ca sử dụng UC28 -- Lập phiếu xuất kho}}{42}{figure.caption.15}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Sequence diagram UC01 -- Đăng nhập}}{47}{figure.caption.16}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Sequence diagram UC13 -- Thêm hàng hóa}}{48}{figure.caption.17}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Sequence diagram UC16 -- Tìm kiếm hàng hóa}}{49}{figure.caption.18}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Sequence diagram UC23 -- Lập phiếu nhập kho}}{50}{figure.caption.19}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Sequence diagram UC28 -- Lập phiếu xuất kho}}{51}{figure.caption.20}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces State Machine Diagram – Trạng thái phiếu nhập kho}}{51}{figure.caption.21}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces State Machine Diagram – Trạng thái phiếu xuất kho}}{52}{figure.caption.22}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Component Diagram – Kiến trúc thành phần hệ thống quản lý kho hàng}}{53}{figure.caption.23}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Sơ đồ điều hướng màn hình (menu theo vai trò: QTV chủ yếu Tài khoản)}}{56}{figure.caption.24}%
