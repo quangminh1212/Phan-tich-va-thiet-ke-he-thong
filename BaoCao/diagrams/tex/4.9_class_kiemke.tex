@@ -1,9 +1,21 @@
 \begin{figure}[H]
 \centering
-\makebox[\textwidth][c]{%
-\begin{tikzpicture}[scale=0.8, transform shape, every class/.style={text width=5.8cm}]
+\resizebox{0.98\textwidth}{!}{%
+\begin{tikzpicture}[every class/.style={text width=3.3cm, font=\scriptsize}]
 
-\begin{class}{PhieuKiemKe}{0,0}
+% Hàng trên
+\begin{class}{NguoiDung}{-9,7}
+\attribute{+ MaNguoiDung: String}
+\attribute{+ VaiTro: String}
+\end{class}
+
+\begin{class}{Kho}{-3,7}
+\attribute{+ MaKho: String}
+\attribute{+ TenKho: String}
+\end{class}
+
+% Hàng giữa
+\begin{class}{PhieuKiemKe}{-3,0}
 \attribute{+ MaPhieuKK: String}
 \attribute{+ MaKho: String}
 \attribute{+ NgayKiemKe: DateTime}
@@ -14,7 +26,7 @@
 \operation{+ duyetDieuChinh()}
 \end{class}
 
-\begin{class}{ChiTietKiemKe}{6.5,0}
+\begin{class}{ChiTietKiemKe}{3.5,0}
 \attribute{+ MaPhieuKK: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SLSoSach: Integer}
@@ -22,35 +34,26 @@
 \attribute{+ ChenhLech: Integer}
 \end{class}
 
-\begin{class}{Kho}{-6,3}
-\attribute{+ MaKho: String}
-\attribute{+ TenKho: String}
+\begin{class}{HangHoa}{9.5,0}
+\attribute{+ MaHangHoa: String}
+\attribute{+ TenHangHoa: String}
 \end{class}
 
-\begin{class}{TonKho}{6.5,-5}
+% Hàng dưới
+\begin{class}{TonKho}{3.5,-6}
 \attribute{+ MaKho: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuongTon: Integer}
 \operation{+ ganTheoKiemKe()}
 \end{class}
 
-\begin{class}{HangHoa}{0,-5}
-\attribute{+ MaHangHoa: String}
-\attribute{+ TenHangHoa: String}
-\end{class}
-
-\begin{class}{NguoiDung}{-6,-2}
-\attribute{+ MaNguoiDung: String}
-\attribute{+ VaiTro: String}
-\end{class}
-
+\draw (NguoiDung) -- (PhieuKiemKe) node[midway, left, font=\tiny] {1..*};
+\draw (Kho) -- (PhieuKiemKe) node[midway, right, font=\tiny] {n..1};
 \draw (PhieuKiemKe) -- (ChiTietKiemKe) node[midway, above, font=\tiny] {1..*};
-\draw (PhieuKiemKe) -- (Kho) node[midway, left, font=\tiny] {n..1};
-\draw (ChiTietKiemKe) -- (HangHoa) node[midway, left, font=\tiny] {n..1};
+\draw (ChiTietKiemKe) -- (HangHoa) node[midway, above, font=\tiny] {n..1};
 \draw (ChiTietKiemKe) -- (TonKho) node[midway, right, font=\tiny] {đối chiếu};
-\draw (PhieuKiemKe) -- (NguoiDung) node[midway, left, font=\tiny] {1..*};
 
-\end{tikzpicture}
+\end{tikzpicture}%
 }
 \caption{Biểu đồ lớp theo nhóm entity -- Kiểm kê (UC33)}
 \label{fig:class-kiemke}

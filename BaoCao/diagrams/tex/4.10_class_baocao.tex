@@ -1,9 +1,16 @@
 \begin{figure}[H]
 \centering
-\makebox[\textwidth][c]{%
-\begin{tikzpicture}[scale=0.8, transform shape, every class/.style={text width=5.2cm}]
+\resizebox{0.98\textwidth}{!}{%
+\begin{tikzpicture}[every class/.style={text width=3.2cm, font=\scriptsize}]
 
-\begin{class}{BaoCaoNXT}{0,2}
+% Hàng trên: phiếu | báo cáo | phiếu
+\begin{class}{PhieuNhapKho}{-8,4}
+\attribute{+ MaPhieuNhap: String}
+\attribute{+ NgayNhap: DateTime}
+\attribute{+ TrangThai: String}
+\end{class}
+
+\begin{class}{BaoCaoNXT}{0,4}
 \attribute{+ TuNgay: Date}
 \attribute{+ DenNgay: Date}
 \attribute{+ MaKho: String}
@@ -14,41 +21,36 @@
 \operation{+ xuatExcel()}
 \end{class}
 
-\begin{class}{PhieuNhapKho}{-6.5,0}
-\attribute{+ MaPhieuNhap: String}
-\attribute{+ NgayNhap: DateTime}
-\attribute{+ TrangThai: String}
-\end{class}
-
-\begin{class}{PhieuXuatKho}{6.5,0}
+\begin{class}{PhieuXuatKho}{8,4}
 \attribute{+ MaPhieuXuat: String}
 \attribute{+ NgayXuat: DateTime}
 \attribute{+ TrangThai: String}
 \end{class}
 
-\begin{class}{TonKho}{-3.5,-4.5}
+% Hàng dưới: 3 lớp tách rộng
+\begin{class}{TonKho}{-7,-3.5}
 \attribute{+ MaKho: String}
 \attribute{+ MaHangHoa: String}
 \attribute{+ SoLuongTon: Integer}
 \end{class}
 
-\begin{class}{HangHoa}{3.5,-4.5}
-\attribute{+ MaHangHoa: String}
-\attribute{+ TenHangHoa: String}
-\end{class}
-
-\begin{class}{Kho}{0,-4.5}
+\begin{class}{Kho}{0,-3.5}
 \attribute{+ MaKho: String}
 \attribute{+ TenKho: String}
 \end{class}
 
-\draw (BaoCaoNXT) -- (PhieuNhapKho) node[midway, left, font=\tiny] {đọc};
-\draw (BaoCaoNXT) -- (PhieuXuatKho) node[midway, right, font=\tiny] {đọc};
-\draw (BaoCaoNXT) -- (TonKho) node[midway, left, font=\tiny] {đọc};
-\draw (TonKho) -- (HangHoa) node[midway, above, font=\tiny] {};
-\draw (TonKho) -- (Kho) node[midway, above, font=\tiny] {};
+\begin{class}{HangHoa}{7,-3.5}
+\attribute{+ MaHangHoa: String}
+\attribute{+ TenHangHoa: String}
+\end{class}
 
-\end{tikzpicture}
+\draw (PhieuNhapKho) -- (BaoCaoNXT) node[midway, above, font=\tiny] {đọc};
+\draw (BaoCaoNXT) -- (PhieuXuatKho) node[midway, above, font=\tiny] {đọc};
+\draw (BaoCaoNXT.south) -- (TonKho.north) node[midway, left, font=\tiny] {đọc};
+\draw (TonKho) -- (Kho) node[midway, above, font=\tiny] {n..1};
+\draw (TonKho.south) to[out=-50,in=-130] node[midway, below, font=\tiny] {n..1} (HangHoa.south);
+
+\end{tikzpicture}%
 }
 \caption{Biểu đồ lớp theo nhóm entity -- Báo cáo nhập--xuất--tồn (UC34)}
 \label{fig:class-baocao}
