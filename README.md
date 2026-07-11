@@ -52,24 +52,12 @@ generator động vào (mặc định bỏ qua file đã tồn tại). Ngoài ra
 
 ## 3. Xuất PNG từ drawio
 
-Cần draw.io CLI (`brew install --cask drawio` trên macOS; trên Windows cài draw.io Desktop và
-dùng `draw.io.exe`):
+Cần draw.io CLI (`brew install --cask drawio`) và ImageMagick (`brew install imagemagick`).
+Dùng script có sẵn - tự crop sát hình vẽ (không dư khoảng trắng, chừa viền 10px):
 
 ```bash
-cd diagram
-for f in drawio/*.drawio; do
-  b=$(basename "${f%.drawio}")
-  drawio -x -f png -s 2 -o "png/$b.png" "$f"
-done
-```
-
-Windows (PowerShell):
-
-```powershell
-cd diagram
-Get-ChildItem drawio\*.drawio | ForEach-Object {
-  & "C:\Program Files\draw.io\draw.io.exe" -x -f png -s 2 -o ("png\" + $_.BaseName + ".png") $_.FullName
-}
+diagram/export_png.sh              # xuất toàn bộ
+diagram/export_png.sh 5.34 4.1     # chỉ xuất file có tên bắt đầu bằng tiền tố này
 ```
 
 ## 4. Kiểm tra đồng bộ (bắt buộc trước khi nộp)

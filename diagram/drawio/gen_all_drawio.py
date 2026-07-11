@@ -87,7 +87,7 @@ class D:
 
     def edge(self, src: str, tgt: str, label: str = "", style: str = S_EDGE) -> str:
         cid = self._id()
-        v = html.escape(label) if label else ""
+        v = html.escape(label).replace("\n", "&#xa;") if label else ""
         self.cells.append(
             f'<mxCell id="{cid}" value="{v}" style="{style}" edge="1" parent="1" source="{src}" target="{tgt}">'
             f'<mxGeometry relative="1" as="geometry"/></mxCell>'
@@ -563,32 +563,50 @@ UC_ACTORS["UC34"] = "Quản lý kho"
 
 # ════════════════════════ Renderers ════════════════════════
 
+def _wrap_label(label: str, maxlen: int) -> str:
+    """Nhãn mũi tên quá dài: tách làm 2 dòng tại khoảng trắng gần giữa nhất
+    (không cắt quá sát hai đầu để tránh dòng cụt kiểu '1:')."""
+    if len(label) <= maxlen:
+        return label
+    mid = len(label) // 2
+    spaces = [i for i, ch in enumerate(label) if ch == " " and 8 <= i <= len(label) - 6]
+    if not spaces:
+        return label
+    cut = min(spaces, key=lambda i: abs(i - mid))
+    return label[:cut] + "\n" + label[cut + 1:]
+
+
 def seq_diagram(title, filename, messages):
-    """Vẽ sequence UML: lifeline theo thứ tự xuất hiện, actor = hình người."""
+    """Vẽ sequence UML: lifeline theo thứ tự xuất hiện, actor = hình người.
+    Biểu đồ nhiều participant (>5) dùng layout gọn: lifeline sát nhau hơn,
+    hộp tên nhỏ hơn, nhãn mũi tên dài tự xuống dòng."""
     order: list[str] = []
     for s, t, _, _ in messages:
         for p in (s, t):
             if p not in order:
                 order.append(p)
     is_actor = {p: (p in ACTORS or p in ("Người dùng", "Tất cả người dùng")) for p in order}
-    span = 200
-    x0 = 60
+    compact = len(order) > 5
+    span = 150 if compact else 200
+    head_w = 120 if compact else 160
+    wrap_at = 24 if compact else 34
+    x0 = 40 if compact else 60
     top = 40
     msg_y0 = top + 90
-    step = 42
+    step = 46
     h = msg_y0 + step * len(messages) + 60
-    w = x0 + span * len(order) + 60
+    w = x0 + span * len(order) + 40
     d = D(title, w, h)
     centers = {}
     for i, p in enumerate(order):
-        cx = x0 + i * span + 80
+        cx = x0 + i * span + head_w // 2
         centers[p] = cx
         if is_actor[p]:
             d.node(p, cx - 20, top, 40, 60, S_ACTOR)
             head_bottom = top + 78
         else:
-            d.node(p, cx - 80, top, 160, 44, S_RECT)
-            head_bottom = top + 44
+            d.node(p, cx - head_w // 2, top, head_w, 40, S_RECT)
+            head_bottom = top + 40
         a1 = d.node("", cx, head_bottom, 1, 1, S_POINT)
         a2 = d.node("", cx, h - 30, 1, 1, S_POINT)
         d.edge(a1, a2, "", S_LIFELINE)
@@ -602,6 +620,7 @@ def seq_diagram(title, filename, messages):
         else:
             lab = label
             style = S_MSG_RET
+        lab = _wrap_label(lab, wrap_at)
         p1 = d.node("", centers[s], y, 1, 1, S_POINT)
         p2 = d.node("", centers[t], y, 1, 1, S_POINT)
         d.edge(p1, p2, lab, style)
@@ -1041,7 +1060,7 @@ def gen_ui_nav():
         d.edge(home, m)
     d.node("Menu hiển thị theo vai trò: QTV chỉ thấy Tài khoản; NV kho không thấy Kho và Báo cáo",
            250, 560, 620, 30, S_NOTE)
-    d.save("7.1_ui_navigation.drawio")
+    d.save("8.1_ui_navigation.drawio")
 
 
 # ───────────────────────── Manifest ─────────────────────────
@@ -1067,7 +1086,7 @@ FILES: dict[str, str] = {
     "4.10_class_kiemke": "Biểu đồ lớp cắt lát nhóm kiểm kê",
     "4.11_class_baocao": "Biểu đồ lớp cắt lát nhóm báo cáo NXT",
     "6.1_component": "Component diagram kiến trúc phân lớp",
-    "7.1_ui_navigation": "Sơ đồ điều hướng màn hình",
+    "8.1_ui_navigation": "Sơ đồ điều hướng màn hình",
 }
 for i in range(1, 35):
     FILES[f"5.{i:02d}_sequence_uc{i:02d}"] = f"Biểu đồ trình tự UC{i:02d} - {USE_CASES[f'UC{i:02d}']['ten']}"

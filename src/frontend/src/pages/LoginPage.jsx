@@ -30,7 +30,7 @@ export default function LoginPage() {
           <input type="password" placeholder="Mật khẩu" value={matKhau} onChange={(e) => setMatKhau(e.target.value)} />
           {err && <div className="error">{err}</div>}
           <button type="submit">Đăng nhập</button>
-          <div className="muted">Tài khoản mẫu: admin / quanly / nhanvien (mật khẩu: tên + 123)</div>
+          {/* <div className="muted">Tài khoản mẫu: admin / quanly / nhanvien (mật khẩu: tên + 123)</div> */}
         </div>
       </form>
     </div>

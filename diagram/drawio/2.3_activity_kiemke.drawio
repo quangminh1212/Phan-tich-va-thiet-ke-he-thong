@@ -1,30 +1,73 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="app.diagrams.net" agent="gen_all_drawio" version="24.0.0">
+<mxfile host="Electron" agent="gen_all_drawio">
   <diagram id="a6671fa9" name="Activity - Nghiệp vụ kiểm kê">
-    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="820" pageHeight="1150" math="0" shadow="0">
+    <mxGraphModel dx="1006" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="820" pageHeight="1150" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-<mxCell id="2" value="Bắt đầu" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#000000;fontSize=11;align=center;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="320.0" y="30" width="140" height="40" as="geometry"/></mxCell>
-<mxCell id="3" value="Tạo phiếu kiểm kê theo kho" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="260.0" y="98" width="260" height="44" as="geometry"/></mxCell>
-<mxCell id="4" value="" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" edge="1" parent="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="5" value="Hệ thống nạp SL theo sổ (TonKho)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="260.0" y="170" width="260" height="44" as="geometry"/></mxCell>
-<mxCell id="6" value="" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" edge="1" parent="1" source="3" target="5"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="7" value="Nhân viên nhập SL thực tế" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="260.0" y="242" width="260" height="44" as="geometry"/></mxCell>
-<mxCell id="8" value="" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" edge="1" parent="1" source="5" target="7"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="9" value="Tính chênh lệch" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="260.0" y="314" width="260" height="44" as="geometry"/></mxCell>
-<mxCell id="10" value="" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" edge="1" parent="1" source="7" target="9"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="11" value="Gửi duyệt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="260.0" y="386" width="260" height="44" as="geometry"/></mxCell>
-<mxCell id="12" value="" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" edge="1" parent="1" source="9" target="11"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="13" value="Quản lý duyệt điều chỉnh?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#F0F0F0;strokeColor=#000000;fontSize=10;align=center;" vertex="1" parent="1"><mxGeometry x="305.0" y="458" width="170" height="70" as="geometry"/></mxCell>
-<mxCell id="14" value="" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" edge="1" parent="1" source="11" target="13"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="15" value="Cập nhật TonKho = số thực tế" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="260.0" y="556" width="260" height="44" as="geometry"/></mxCell>
-<mxCell id="16" value="Có" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" edge="1" parent="1" source="13" target="15"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="17" value="Kết thúc" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#000000;fontSize=11;align=center;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="320.0" y="628" width="140" height="40" as="geometry"/></mxCell>
-<mxCell id="18" value="" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" edge="1" parent="1" source="15" target="17"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="19" value="Yêu cầu kiểm đếm lại" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="570" y="470" width="200" height="44" as="geometry"/></mxCell>
-<mxCell id="20" value="Không" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" edge="1" parent="1" source="13" target="19"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="21" value="" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" edge="1" parent="1" source="19" target="7"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#000000;fontSize=11;align=center;fontStyle=1;" value="Bắt đầu" vertex="1">
+          <mxGeometry height="40" width="140" x="320" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" value="Tạo phiếu kiểm kê theo kho" vertex="1">
+          <mxGeometry height="44" width="260" x="260" y="98" as="geometry" />
+        </mxCell>
+        <mxCell id="4" edge="1" parent="1" source="2" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" target="3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" value="Hệ thống nạp SL theo sổ (TonKho)" vertex="1">
+          <mxGeometry height="44" width="260" x="260" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="6" edge="1" parent="1" source="3" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" target="5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" value="Nhân viên nhập SL thực tế" vertex="1">
+          <mxGeometry height="44" width="260" x="260" y="242" as="geometry" />
+        </mxCell>
+        <mxCell id="8" edge="1" parent="1" source="5" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" target="7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" value="Tính chênh lệch" vertex="1">
+          <mxGeometry height="44" width="260" x="260" y="314" as="geometry" />
+        </mxCell>
+        <mxCell id="10" edge="1" parent="1" source="7" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" target="9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" value="Gửi duyệt" vertex="1">
+          <mxGeometry height="44" width="260" x="260" y="386" as="geometry" />
+        </mxCell>
+        <mxCell id="12" edge="1" parent="1" source="9" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" target="11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="13" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#F0F0F0;strokeColor=#000000;fontSize=10;align=center;" value="Quản lý duyệt điều chỉnh?" vertex="1">
+          <mxGeometry height="70" width="170" x="305" y="458" as="geometry" />
+        </mxCell>
+        <mxCell id="14" edge="1" parent="1" source="11" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" target="13" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" value="Cập nhật TonKho = số thực tế" vertex="1">
+          <mxGeometry height="44" width="260" x="260" y="556" as="geometry" />
+        </mxCell>
+        <mxCell id="16" edge="1" parent="1" source="13" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" target="15" value="Có">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#000000;fontSize=11;align=center;fontStyle=1;" value="Kết thúc" vertex="1">
+          <mxGeometry height="40" width="140" x="320" y="628" as="geometry" />
+        </mxCell>
+        <mxCell id="18" edge="1" parent="1" source="15" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" target="17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;align=center;" value="Yêu cầu kiểm đếm lại" vertex="1">
+          <mxGeometry height="44" width="200" x="570" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="20" edge="1" parent="1" source="13" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" target="19" value="Không">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="21" edge="1" parent="1" source="19" style="endArrow=block;html=1;rounded=0;endFill=1;strokeColor=#000000;" target="7" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="670" y="264" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

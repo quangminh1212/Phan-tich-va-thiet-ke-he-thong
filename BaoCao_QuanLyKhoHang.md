@@ -200,11 +200,11 @@ MỤC LỤC
         5.2.1. Phiếu nhập kho
         5.2.2. Phiếu xuất kho
     5.3. Kết luận chương
-**CHƯƠNG 6: THIẾT KẾ CHI TIẾT**
+**CHƯƠNG 6: KIẾN TRÚC HỆ THỐNG**
     6.1. Component Diagram
     6.2. Quan hệ chính giữa các lớp (thiết kế)
     6.3. Kết luận chương
-**CHƯƠNG 7: THIẾT KẾ CƠ SỞ DỮ LIỆU VÀ GIAO DIỆN**
+**CHƯƠNG 7: THIẾT KẾ CƠ SỞ DỮ LIỆU**
     7.1. Danh sách bảng
     7.2. Đặc tả một số bảng quan trọng
         7.2.1. Bảng HangHoa
@@ -274,7 +274,7 @@ Hình 5.34: Biểu đồ trình tự UC34 - Xem báo cáo nhập xuất tồn
 Hình 5.35: Biểu đồ trạng thái phiếu nhập kho
 Hình 5.36: Biểu đồ trạng thái phiếu xuất kho
 Hình 6.1: Component diagram kiến trúc phân lớp
-Hình 7.1: Sơ đồ điều hướng màn hình
+Hình 8.1: Sơ đồ điều hướng màn hình
 <!-- @pagebreak -->
 <!-- @style align=center size=16 bold /-->
 DANH MỤC THUẬT NGỮ VÀ VIẾT TẮT
@@ -387,15 +387,16 @@ Bảng 1.3: Các giai đoạn phân tích - thiết kế và biểu đồ sử d
 | Phân tích chức năng | Use Case (tổng quát, phân rã, đặc tả) | Chương 3 |
 | Phân tích cấu trúc | Class (biểu đồ lớp) | Chương 4 |
 | Phân tích hành vi | Sequence (trình tự) + State (trạng thái) | Chương 5 |
-| Thiết kế chi tiết | Component (thành phần) | Chương 6 |
-| Thiết kế CSDL và giao diện | Bảng CSDL, sơ đồ điều hướng màn hình | Chương 7 |
+| Kiến trúc hệ thống | Component (thành phần) | Chương 6 |
+| Thiết kế CSDL | Bảng CSDL, từ điển dữ liệu | Chương 7 |
+| Thiết kế giao diện | Sơ đồ điều hướng màn hình | Chương 8 |
 ## 1.6. Kết luận chương
 Chương 1 đã khảo sát bối cảnh doanh nghiệp, chỉ ra các hạn chế của quy trình thủ công hiện tại và xác lập mục tiêu, phạm vi của hệ thống với 10 yêu cầu chức năng (FR-01 đến FR-10) và 5 yêu cầu phi chức năng (NFR-01 đến NFR-05). Khung phân tích được chọn là hướng đối tượng theo trình tự **chức năng --> cấu trúc --> hành vi**, làm mạch dẫn cho các chương tiếp theo.
 <!-- @pagebreak -->
 # CHƯƠNG 2: MÔ TẢ NGHIỆP VỤ
 Chương này mô tả các nghiệp vụ kho của doanh nghiệp - đầu vào cho ba giai đoạn phân tích UML ở các chương sau - và minh họa ba nghiệp vụ chính bằng biểu đồ hoạt động.
 ## 2.1. Quy trình phân tích - thiết kế (hướng đối tượng)
-Quy trình phân tích hướng đối tượng của báo cáo gồm ba giai đoạn nối tiếp: **phân tích chức năng** (Chương 3, dùng biểu đồ use case và đặc tả), **phân tích cấu trúc** (Chương 4, dùng biểu đồ lớp) và **phân tích hành vi** (Chương 5, dùng biểu đồ trình tự và trạng thái). Sau ba giai đoạn phân tích là thiết kế chi tiết (Chương 6) và thiết kế CSDL, giao diện (Chương 7).
+Quy trình phân tích hướng đối tượng của báo cáo gồm ba giai đoạn nối tiếp: **phân tích chức năng** (Chương 3, dùng biểu đồ use case và đặc tả), **phân tích cấu trúc** (Chương 4, dùng biểu đồ lớp) và **phân tích hành vi** (Chương 5, dùng biểu đồ trình tự và trạng thái). Sau ba giai đoạn phân tích là kiến trúc hệ thống (Chương 6), thiết kế CSDL (Chương 7) và thiết kế giao diện (Chương 8).
 Một số quy ước:
 - **Nghiệp vụ** là công việc của doanh nghiệp (nhập kho, xuất kho, kiểm kê...). Nghiệp vụ dạng "Quản lý X" là gói công việc chung; mỗi **use case** ở Chương 3 là một mục tiêu cụ thể của tác nhân (ví dụ "Thêm hàng hóa").
 - **Đăng nhập / Đăng xuất** không phải nghiệp vụ kho mà là **chức năng hệ thống** hỗ trợ an toàn truy cập, được mô hình hóa bằng use case UC01, UC02 ở Chương 3.
@@ -479,7 +480,7 @@ Bảng 3.1: Danh sách tác nhân của hệ thống
 - **Đăng nhập / Đăng xuất** là use case hệ thống (hỗ trợ an toàn truy cập), vẫn cần đặc tả vì là điểm vào của mọi tác nhân; các use case nghiệp vụ đều **«include»** Đăng nhập.
 ## 3.4. Phân tích chức năng bằng biểu đồ use case tổng quát
 Biểu đồ tổng quát (Hình 3.1) thể hiện các **nhóm chức năng** và quan hệ với tác nhân; mỗi hình oval ở mức này là một nhóm sẽ được phân rã ở mục 3.5.
-![Hình 3.1: Biểu đồ use case tổng quát](diagram/png/3.1_usecase_tongquat.png)
+![Hình 3.1: Biểu đồ use case tổng quát](diagram/png/3.1_usecase_tongquat.png){width=320}
 Giải thích Hình 3.1:
 - **Hộp nét đứt** là ranh giới hệ thống quản lý kho hàng - mọi use case nằm bên trong.
 - **Ba tác nhân** (hình người): Quản trị viên (trái), Quản lý kho (phải), Nhân viên kho (dưới).
@@ -488,18 +489,18 @@ Giải thích Hình 3.1:
 ## 3.5. Phân tích chức năng bằng biểu đồ use case phân rã
 Mỗi biểu đồ phân rã gắn với một nhóm chức năng; mỗi oval là **một use case** cụ thể.
 ### 3.5.1. Nhóm truy cập và tài khoản
-![Hình 3.2: Biểu đồ use case phân rã nhóm truy cập và tài khoản](diagram/png/3.2_usecase_taikhoan.png)
+![Hình 3.2: Biểu đồ use case phân rã nhóm truy cập và tài khoản](diagram/png/3.2_usecase_taikhoan.png){width=520}
 Hình 3.2 gồm:
 (1) hai use case **hệ thống** UC01 Đăng nhập, UC02 Đăng xuất dành cho mọi người dùng;
 (2) năm use case quản trị tài khoản UC03 - UC07 chỉ dành cho Quản trị viên, theo nguyên tắc "mỗi hành động một use case". Các use case quản trị đều «include» UC01 (phải đăng nhập trước).
 ### 3.5.2. Nhóm đối tác
-![Hình 3.3: Biểu đồ use case phân rã nhóm đối tác](diagram/png/3.3_usecase_ncc.png)
+![Hình 3.3: Biểu đồ use case phân rã nhóm đối tác](diagram/png/3.3_usecase_ncc.png){width=380}
 Hình 3.3 phân rã nhóm nhà cung cấp thành đủ năm mục tiêu UC08 - UC12 (Thêm / Sửa / Xóa / Tìm kiếm / Xem danh sách); quan hệ «include» tới UC01 thể hiện điều kiện đăng nhập. Nhân viên kho và Quản lý kho đều thao tác được các use case NCC.
 ### 3.5.3. Nhóm hàng hóa và kho
-![Hình 3.4: Biểu đồ use case phân rã nhóm hàng hóa và kho](diagram/png/3.4_usecase_hang_kho.png)
+![Hình 3.4: Biểu đồ use case phân rã nhóm hàng hóa và kho](diagram/png/3.4_usecase_hang_kho.png){width=520}
 Hình 3.4 gồm hai cột: cột trái là **hàng hóa** UC13 - UC17 (Nhân viên kho và Quản lý kho); cột phải là **kho** UC18 - UC22, chỉ dành cho Quản lý kho (Quản trị viên không tham gia). Nguyên tắc: đã thêm được thì phải sửa / xóa / tìm / xem được.
 ### 3.5.4. Nhóm nhập, xuất, kiểm kê, báo cáo
-![Hình 3.5: Biểu đồ use case phân rã nhóm nhập, xuất, kiểm kê, báo cáo](diagram/png/3.5_usecase_phieu_baocao.png)
+![Hình 3.5: Biểu đồ use case phân rã nhóm nhập, xuất, kiểm kê, báo cáo](diagram/png/3.5_usecase_phieu_baocao.png){width=520}
 Hình 3.5 gồm **phiếu nhập** UC23 - UC27 và **phiếu xuất** UC28 - UC32, mỗi nhóm đủ Lập / Sửa / Xóa / Tìm kiếm / Xem danh sách; thêm **UC33** Lập phiếu kiểm kê và **UC34** Xem báo cáo nhập xuất tồn. Nhân viên kho lập / sửa phiếu; Quản lý kho duyệt phiếu và là tác nhân duy nhất của UC34.
 ## 3.6. Bảng tổng hợp use case
 Bảng 3.2 tổng hợp 34 use case của hệ thống; mã UC được dùng thống nhất ở đặc tả (mục 3.7), biểu đồ lớp cắt lát (mục 4.4) và biểu đồ trình tự (mục 5.1).
@@ -1321,7 +1322,7 @@ Hình 5.36: đối xứng với phiếu nhập; khi "Đã duyệt", hệ thống
 ## 5.3. Kết luận chương
 Chương 5 hoàn thành phân tích hành vi với **34 biểu đồ trình tự** tương ứng 34 use case (Hình 5.1 - 5.34) và **2 biểu đồ trạng thái** cho phiếu nhập / phiếu xuất (Hình 5.35, 5.36). Mọi thông điệp trên biểu đồ trình tự khớp phương thức khai báo ở biểu đồ lớp Chương 4; số bước luồng chính trong đặc tả (mục 3.7) khớp số thông điệp đánh số. Ba giai đoạn phân tích - chức năng (Chương 3), cấu trúc (Chương 4), hành vi (Chương 5) - đã khép kín; hai chương tiếp theo chuyển sang thiết kế.
 <!-- @pagebreak -->
-# CHƯƠNG 6: THIẾT KẾ CHI TIẾT
+# CHƯƠNG 6: KIẾN TRÚC HỆ THỐNG
 Sau ba giai đoạn phân tích (chức năng - cấu trúc - hành vi), chương này chuyển sang **thiết kế**: kiến trúc thành phần của hệ thống và các quan hệ lớp phục vụ triển khai.
 ## 6.1. Component Diagram
 ![Hình 6.1: Component diagram kiến trúc phân lớp](diagram/png/6.1_component.png)
@@ -1341,9 +1342,9 @@ Các quan hệ lớp mang sang thiết kế (làm cơ sở đặt khóa ngoại 
 - Kho 1 - n TonKho; HangHoa 1 - n TonKho (khóa phức hợp MaKho, MaHangHoa).
 - NguoiDung 1 - n LichSuThaoTac.
 ## 6.3. Kết luận chương
-Chương 6 xác định kiến trúc thành phần bốn tầng (Hình 6.1) và chốt các quan hệ lớp thiết kế, làm nền trực tiếp cho thiết kế cơ sở dữ liệu và giao diện ở Chương 7.
+Chương 6 xác định kiến trúc thành phần bốn tầng (Hình 6.1) và chốt các quan hệ lớp thiết kế, làm nền trực tiếp cho thiết kế cơ sở dữ liệu (Chương 7) và thiết kế giao diện (Chương 8).
 <!-- @pagebreak -->
-# CHƯƠNG 7: THIẾT KẾ CƠ SỞ DỮ LIỆU VÀ GIAO DIỆN
+# CHƯƠNG 7: THIẾT KẾ CƠ SỞ DỮ LIỆU
 Chương này ánh xạ các lớp thực thể (Chương 4) sang bảng cơ sở dữ liệu quan hệ, đặc tả các bảng quan trọng theo mẫu từ điển dữ liệu, và thiết kế sơ đồ điều hướng màn hình.
 ## 7.1. Danh sách bảng
 Cơ sở dữ liệu quan hệ gồm 14 bảng - mỗi lớp thực thể ở Bảng 4.1 ánh xạ đúng một bảng cùng tên; khóa chính / khóa ngoại bám theo quan hệ lớp ở mục 6.2. Bảng 7.1 liệt kê toàn bộ.
@@ -1416,17 +1417,23 @@ Bảng 7.5: Từ điển dữ liệu bảng PhieuKiemKe và ChiTietKiemKe
 | MaHangHoa (chi tiết) | VARCHAR | 20 | Khóa ngoại tới HangHoa |
 | SLThucTe, SLSoSach | INT | | >= 0 |
 | ChenhLech | INT | | = SLThucTe - SLSoSach |
-## 7.3. Thiết kế giao diện
-### 7.3.1. Sơ đồ điều hướng màn hình
-![Hình 7.1: Sơ đồ điều hướng màn hình](diagram/png/7.1_ui_navigation.png)
-Hình 7.1 mô tả người dùng đi từ màn hình nào sang màn hình nào:
+## 7.3. Kết luận chương
+Chương 7 hoàn tất thiết kế dữ liệu: 14 bảng CSDL ánh xạ 1-1 từ các lớp thực thể (Bảng 7.1) và từ điển dữ liệu cho các bảng cốt lõi (Bảng 7.2 - 7.5), với đầy đủ khóa chính / khóa ngoại và ràng buộc toàn vẹn theo quan hệ lớp ở Chương 6.
+
+<!-- @pagebreak -->
+
+# CHƯƠNG 8: THIẾT KẾ GIAO DIỆN
+Chương này thiết kế giao diện người dùng ở mức cấu trúc màn hình: sơ đồ điều hướng gắn với các use case đã phân tích, làm cơ sở triển khai UI.
+## 8.1. Sơ đồ điều hướng màn hình
+![Hình 8.1: Sơ đồ điều hướng màn hình](diagram/png/8.1_ui_navigation.png)
+Hình 8.1 mô tả người dùng đi từ màn hình nào sang màn hình nào:
 - Điểm vào là **Đăng nhập (UC01)**, thành công thì tới **Trang chủ (Dashboard)**.
 - Từ trang chủ tỏa ra các màn chức năng theo **vai trò**: Quản trị viên chỉ thấy Tài khoản (UC03 - UC07); Quản lý kho / Nhân viên kho thấy hàng hóa, NCC, kho, phiếu, báo cáo theo đúng quyền (Nhân viên kho không thấy Kho và Báo cáo).
 - Mỗi hộp màn hình gắn mã UC để truy vết thiết kế giao diện về phân tích chức năng.
 
 Sơ đồ không mô tả layout chi tiết từng form mà mô tả cấu trúc menu / luồng màn hình phục vụ triển khai UI. Các màn hình chính: Đăng nhập; Trang chủ; bốn màn danh mục (Tài khoản, NCC, Hàng hóa, Kho - mỗi màn đủ thêm / sửa / xóa / tìm / xem); Phiếu nhập; Phiếu xuất; Kiểm kê; Báo cáo nhập - xuất - tồn (chọn điều kiện, bảng kết quả, nút xuất Excel).
-## 7.4. Kết luận chương
-Chương 7 hoàn tất thiết kế dữ liệu và giao diện: 14 bảng CSDL ánh xạ 1-1 từ các lớp thực thể (Bảng 7.1), từ điển dữ liệu cho các bảng cốt lõi (Bảng 7.2 - 7.5) và sơ đồ điều hướng màn hình gắn mã use case (Hình 7.1). Đến đây báo cáo khép kín chuỗi truy vết: yêu cầu (FR) --> use case --> biểu đồ trình tự --> lớp / phương thức --> bảng CSDL --> màn hình.
+## 8.2. Kết luận chương
+Chương 8 hoàn tất thiết kế giao diện với sơ đồ điều hướng màn hình gắn mã use case (Hình 8.1). Đến đây báo cáo khép kín chuỗi truy vết: yêu cầu (FR) --> use case --> biểu đồ trình tự --> lớp / phương thức --> bảng CSDL --> màn hình.
 <!-- @pagebreak -->
 # TÀI LIỆU THAM KHẢO
 1. G. Booch, J. Rumbaugh, and I. Jacobson, *The Unified Modeling Language User Guide*, 2nd ed. Boston, MA: Addison-Wesley, 2005.

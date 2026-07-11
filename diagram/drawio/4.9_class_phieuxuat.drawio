@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="gen_all_drawio">
   <diagram id="4b0b5fc2" name="Class cắt lát - Phiếu xuất (UC28-UC32)">
-    <mxGraphModel dx="958" dy="713" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="760" math="0" shadow="0">
+    <mxGraphModel dx="1006" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="760" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -258,9 +258,6 @@
         </mxCell>
         <mxCell id="86" edge="1" parent="1" source="17" style="endArrow=open;html=1;rounded=0;dashed=1;endFill=0;strokeColor=#000000;fontSize=10;" target="61" value="kiemTraDu / giamTon">
           <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="87" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=12;fontStyle=1;" value="Phiếu xuất" vertex="1">
-          <mxGeometry height="30" width="90" x="140" y="650" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
