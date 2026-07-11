@@ -87,7 +87,7 @@ def main() -> int:
         warnings.append(f"Chưa có file báo cáo {md_path} - bỏ qua kiểm tra Markdown")
     else:
         md = md_path.read_text(encoding="utf-8")
-        refs = set(re.findall(r"!\[[^\]]*\]\(diagram/png/([^)]+)\.png\)", md))
+        refs = set(re.findall(r"!\[[^\]]*\]\(diagram/png/([^)\s]+)\.png(?:\s+=[^)]*)?\)", md))
         for f in FILES:
             if f not in refs:
                 errors.append(f"PNG 'diagram/png/{f}.png' không được nhúng trong báo cáo")

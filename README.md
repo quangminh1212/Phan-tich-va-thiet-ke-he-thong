@@ -46,17 +46,6 @@ DOCX lẫn PDF).
 
 ## 2. Sửa / sinh lại biểu đồ
 
-Mọi biểu đồ sinh tự động từ **SPEC** trong `diagram/drawio/gen_all_drawio.py`
-(`CLASSES` = lớp / thuộc tính / phương thức, `USE_CASES` = message của 34 sequence,
-`DB_TABLES` = bảng CSDL). Sửa spec rồi sinh lại:
-
-```bash
-cd diagram/drawio
-python3 gen_all_drawio.py                     # AN TOÀN: chỉ tạo file còn thiếu, KHÔNG ghi đè
-python3 gen_all_drawio.py --force             # ghi đè tất cả (bản cũ tự sao lưu vào _backup/)
-python3 gen_all_drawio.py --force --only 4.1  # chỉ sinh lại file tên bắt đầu bằng "4.1"
-```
-
 File `.drawio` chỉnh tay bằng https://app.diagrams.net hoặc draw.io desktop sẽ **không** bị
 generator động vào (mặc định bỏ qua file đã tồn tại). Ngoài ra draw.io desktop tự lưu backup
 ẩn dạng `.$tên.drawio.bkp` cạnh mỗi file - có thể khôi phục từ đó nếu lỡ tay.

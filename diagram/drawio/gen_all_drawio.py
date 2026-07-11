@@ -850,7 +850,6 @@ def gen_classes_overview():
     d.edge(ctx, hh, "n..1", S_EDGE_OPEN)
     d.edge(kho, ton, "1..*", S_EDGE_OPEN)
     d.edge(hh, ton, "1..*", S_EDGE_OPEN)
-    d.node("PhieuXuatKho không gắn khách hàng (chỉ LyDoXuat / GhiChu)", 60, 750, 420, 30, S_NOTE)
     d.save("4.2_class_nhapxuat.drawio")
 
     # 4.3 kiểm kê + lịch sử
@@ -937,7 +936,6 @@ def gen_class_slices():
                  ("Kho", "PhieuXuatKho", "1..*", asc),
                  ("ChiTietPhieuXuat", "HangHoa", "n..1", asc),
                  ("PhieuXuatKho", "TonKho", "kiemTraDu / giamTon", dep)],
-                notes=[("Không có lớp KhachHang - phiếu xuất chỉ ghi LyDoXuat / GhiChu", 60, 700, 460)],
                 width=1300)
     class_slice("Class cắt lát - Kiểm kê (UC33)", "4.10_class_kiemke.drawio",
                 [("ManHinhKiemKe", 40, 60, 240, 5), ("DieuKhienKiemKe", 350, 60, 260, None),
