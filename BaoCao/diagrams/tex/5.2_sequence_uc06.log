@@ -1,6 +1,0 @@
-This is LuaHBTeX, Version 1.24.0 (TeX Live 2026)  (format=lualatex 2026.7.7)  9 JUL 2026 01:10
- restricted system commands enabled.
-**5.2_sequence_uc06.tex
-(
-! error:  (file io): fflush() failed (Invalid argument)
-!  ==> Fatal error occurred, no output PDF file produced!

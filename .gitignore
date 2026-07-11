@@ -14,3 +14,5 @@ VIII.HUST/Phân tích và thiết kế hệ thống/*.png
 
 # IDE metadata
 .devin/
+
+.DS_Store

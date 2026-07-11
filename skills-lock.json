@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "write-md-to-docx": {
+      "source": "luytbq/md-to-docx",
+      "sourceType": "github",
+      "skillPath": "skills/write-md-to-docx/SKILL.md",
+      "computedHash": "c0ef12ae967a8eb3c73441987e83ba4bb33b2b1dd0f6c25298850a1f6445b6d5"
+    }
+  }
+}
