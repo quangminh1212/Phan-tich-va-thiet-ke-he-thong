@@ -1,20 +1,39 @@
 # -*- coding: utf-8 -*-
-"""Sinh toàn bộ file .drawio cho báo cáo v2 - Hệ thống Quản lý Kho Hàng.
+"""Sinh file .drawio cho báo cáo v2 - Hệ thống Quản lý Kho Hàng.
 
 Spec-driven: CLASSES + USE_CASES định nghĩa một chỗ, dùng chung cho:
   - biểu đồ lớp (tổng thể + cắt lát)
   - biểu đồ trình tự (34 UC)
   - check đồng bộ Sequence-Class-CSDL (check_sync.py import file này)
 
-Chạy:  python3 gen_all_drawio.py
+AN TOÀN VỚI FILE SỬA TAY: mặc định CHỈ tạo file còn thiếu, KHÔNG ghi đè
+file .drawio đã tồn tại (để không mất chỉnh sửa thủ công trong draw.io).
+
+Chạy:
+  python3 gen_all_drawio.py                     # chỉ tạo file còn thiếu
+  python3 gen_all_drawio.py --force             # ghi đè TẤT CẢ (có backup)
+  python3 gen_all_drawio.py --force --only 4.1  # chỉ ghi đè file tên bắt đầu "4.1"
+
+Trước khi ghi đè, bản hiện tại được sao lưu vào _backup/<timestamp>/.
 """
 from __future__ import annotations
 
 import html
+import shutil
+import sys
+import time
 import uuid
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parent
+
+FORCE = "--force" in sys.argv
+ONLY: list[str] = []
+if "--only" in sys.argv:
+    _i = sys.argv.index("--only")
+    ONLY = [a for a in sys.argv[_i + 1:] if not a.startswith("--")]
+_BACKUP_DIR = OUT / "_backup" / time.strftime("%Y%m%d-%H%M%S")
+_SKIPPED: list[str] = []
 
 # ───────────────────────── Styles ─────────────────────────
 S_ACTOR = "shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#FFFFFF;strokeColor=#000000;"
@@ -102,6 +121,14 @@ class D:
         return cid
 
     def save(self, filename: str):
+        target = OUT / filename
+        if target.exists():
+            if not FORCE or (ONLY and not any(filename.startswith(p) for p in ONLY)):
+                _SKIPPED.append(filename)
+                return
+            # ghi đè có chủ đích (--force): sao lưu bản hiện tại trước
+            _BACKUP_DIR.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(target, _BACKUP_DIR / filename)
         body = "\n".join(self.cells)
         xml = f'''<?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="app.diagrams.net" agent="gen_all_drawio" version="24.0.0">
@@ -1062,6 +1089,11 @@ def main():
     files = sorted(OUT.glob("*.drawio"))
     missing = [f for f in FILES if not (OUT / f"{f}.drawio").exists()]
     print(f"\nTotal: {len(files)} drawio files (manifest {len(FILES)})")
+    if _SKIPPED:
+        print(f"Giữ nguyên {len(_SKIPPED)} file đã tồn tại (không ghi đè). "
+              f"Muốn sinh lại: --force [--only <tên>] - bản cũ sẽ được sao lưu vào _backup/.")
+    if FORCE and _BACKUP_DIR.exists():
+        print(f"Đã sao lưu bản trước khi ghi đè vào: {_BACKUP_DIR}")
     if missing:
         print("MISSING:", missing)
 

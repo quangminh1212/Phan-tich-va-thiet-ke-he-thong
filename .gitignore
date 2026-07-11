@@ -16,3 +16,6 @@ VIII.HUST/Phân tích và thiết kế hệ thống/*.png
 .devin/
 
 .DS_Store
+
+# drawio generator backups
+diagram/drawio/_backup/

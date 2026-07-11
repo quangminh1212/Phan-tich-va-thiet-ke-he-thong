@@ -422,11 +422,12 @@ Bảng 1.2: Yêu cầu phi chức năng của hệ thống
 
 Hệ thống được đề xuất triển khai theo mô hình ứng dụng web với kiến trúc phân lớp (multi-tier): tầng giao diện, tầng nghiệp vụ, tầng truy cập dữ liệu và tầng cơ sở dữ liệu (chi tiết ở Chương 6):
 
-- **Ngôn ngữ lập trình**: Python - cú pháp rõ ràng, thư viện phong phú, cộng đồng lớn.
-- **Framework**: Django - hỗ trợ sẵn ORM, phân quyền, bảo mật.
-- **Cơ sở dữ liệu**: PostgreSQL - hệ quản trị CSDL quan hệ mã nguồn mở, ổn định, hiệu năng cao.
-- **Giao diện**: HTML5, CSS3, JavaScript kết hợp Bootstrap (responsive).
-- **Công cụ mô hình hóa**: draw.io cho toàn bộ biểu đồ UML; xuất danh sách bằng pandas / openpyxl khi cần.
+- **Ngôn ngữ backend**: Go (Golang) - biên dịch tĩnh, hiệu năng cao, hỗ trợ xử lý đồng thời tốt, phù hợp xây dựng API cho hệ thống nhiều người dùng (NFR-01).
+- **Framework backend**: Gin (web framework) kết hợp GORM (thư viện ORM) - định tuyến REST API gọn, tự ánh xạ lớp thực thể sang bảng CSDL, hỗ trợ transaction cho các nghiệp vụ duyệt phiếu.
+- **Cơ sở dữ liệu**: PostgreSQL - hệ quản trị CSDL quan hệ mã nguồn mở, ổn định, hiệu năng cao, bảo đảm ràng buộc toàn vẹn (khóa chính / khóa ngoại) theo thiết kế Chương 7.
+- **Giao diện**: React (thư viện JavaScript xây dựng giao diện theo component, build bằng Vite) - đáp ứng giao diện trực quan, responsive trên máy tính và máy tính bảng (NFR-05).
+- **Xác thực và phân quyền**: JWT (JSON Web Token) gắn theo phiên đăng nhập, phân quyền theo vai trò ở tầng API (NFR-02).
+- **Công cụ hỗ trợ**: draw.io cho toàn bộ biểu đồ UML; Docker Compose để triển khai CSDL; xuất báo cáo danh sách dạng CSV / Excel khi cần.
 
 ### 1.5.2. Hướng phân tích - thiết kế: hướng đối tượng (OO)
 
@@ -2012,5 +2013,5 @@ Chương 7 hoàn tất thiết kế dữ liệu và giao diện: 14 bảng CSDL 
 2. C. Larman, *Applying UML and Patterns: An Introduction to Object-Oriented Analysis and Design and Iterative Development*, 3rd ed. Upper Saddle River, NJ: Prentice Hall, 2004.
 3. I. Sommerville, *Software Engineering*, 10th ed. Harlow, England: Pearson, 2016.
 4. Nguyễn Nhật Quang, *Bài giảng Phân tích và Thiết kế Hệ thống*, Trường Công nghệ Thông tin và Truyền thông, Đại học Bách khoa Hà Nội.
-5. Django Software Foundation, "Django documentation," https://docs.djangoproject.com/, truy cập tháng 7 năm 2026.
+5. Gin Web Framework, "Gin documentation," https://gin-gonic.com/docs/, và Meta Platforms, "React documentation," https://react.dev/, truy cập tháng 7 năm 2026.
 6. The PostgreSQL Global Development Group, "PostgreSQL documentation," https://www.postgresql.org/docs/, truy cập tháng 7 năm 2026.
