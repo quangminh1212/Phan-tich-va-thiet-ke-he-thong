@@ -7,18 +7,19 @@ và nhúng dưới dạng PNG.
 ## Cấu trúc thư mục
 
 ```
-v2/
-  BaoCao_QuanLyKhoHang.md      Nguồn báo cáo (Markdown + directive md-to-docx)
-  BaoCao_QuanLyKhoHang.docx    Bản DOCX build từ file .md
-  hust-logo.png                Logo trang bìa
-  diagram/
-    drawio/                    57 file .drawio (nguồn biểu đồ, mở bằng draw.io)
-      gen_all_drawio.py        Generator sinh toàn bộ .drawio từ SPEC (CLASSES / USE_CASES)
-      check_sync.py            Kiểm tra đồng bộ Sequence-Class-CSDL-Markdown
-    png/                       57 file PNG xuất từ drawio/ (được nhúng vào báo cáo)
-  script/
-    generate_docx_from_md.bat  Build DOCX trên Windows
-  README.md
+BaoCao_QuanLyKhoHang.md      Nguồn báo cáo (Markdown + directive md-to-docx)
+BaoCao_QuanLyKhoHang.docx    Bản DOCX build từ file .md
+hust-logo.png                Logo trang bìa
+diagram/
+  drawio/                    57 file .drawio (nguồn biểu đồ, mở bằng draw.io)
+    gen_all_drawio.py        Generator sinh toàn bộ .drawio từ SPEC (CLASSES / USE_CASES)
+    check_sync.py            Kiểm tra đồng bộ Sequence-Class-CSDL-Markdown
+  png/                       57 file PNG xuất từ drawio/ (được nhúng vào báo cáo)
+script/
+  generate_docx_from_md.bat  Build DOCX trên Windows
+  generate_docx_from_md.sh   Build DOCX trên macOS / Linux
+v1/                          Bản báo cáo LaTeX cũ (tham chiếu)
+README.md
 ```
 
 ## 1. Build DOCX từ Markdown
@@ -31,12 +32,13 @@ Yêu cầu: Node.js (có `npx`).
 script\generate_docx_from_md.bat
 ```
 
-**macOS / Linux**:
+**macOS / Linux** - chạy:
 
 ```bash
-cd v2
-npx -y -p @luytbq43/md-to-docx md-to-docx BaoCao_QuanLyKhoHang.md -o BaoCao_QuanLyKhoHang.docx
+script/generate_docx_from_md.sh
 ```
+
+(tương đương: `npx -y -p @luytbq43/md-to-docx md-to-docx BaoCao_QuanLyKhoHang.md -o BaoCao_QuanLyKhoHang.docx` từ thư mục gốc)
 
 Converter in ra cảnh báo (`var` / `link` / `image` / `style`...) nếu nguồn có lỗi - sửa nguồn
 tới khi **0 warning**. Xuất PDF: mở file DOCX bằng Word rồi Save As PDF (HUST yêu cầu nộp cả
@@ -49,7 +51,7 @@ Mọi biểu đồ sinh tự động từ **SPEC** trong `diagram/drawio/gen_all
 `DB_TABLES` = bảng CSDL). Sửa spec rồi sinh lại:
 
 ```bash
-cd v2/diagram/drawio
+cd diagram/drawio
 python3 gen_all_drawio.py
 ```
 
@@ -62,7 +64,7 @@ Cần draw.io CLI (`brew install --cask drawio` trên macOS; trên Windows cài 
 dùng `draw.io.exe`):
 
 ```bash
-cd v2/diagram
+cd diagram
 for f in drawio/*.drawio; do
   b=$(basename "${f%.drawio}")
   drawio -x -f png -s 2 -o "png/$b.png" "$f"
@@ -72,7 +74,7 @@ done
 Windows (PowerShell):
 
 ```powershell
-cd v2\diagram
+cd diagram
 Get-ChildItem drawio\*.drawio | ForEach-Object {
   & "C:\Program Files\draw.io\draw.io.exe" -x -f png -s 2 -o ("png\" + $_.BaseName + ".png") $_.FullName
 }
@@ -81,7 +83,7 @@ Get-ChildItem drawio\*.drawio | ForEach-Object {
 ## 4. Kiểm tra đồng bộ (bắt buộc trước khi nộp)
 
 ```bash
-cd v2/diagram/drawio
+cd diagram/drawio
 python3 check_sync.py            # exit 0 = đạt
 ```
 

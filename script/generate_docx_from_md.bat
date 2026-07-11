@@ -1,6 +1,6 @@
 @echo off
 REM Sinh file DOCX tu bao cao Markdown bang md-to-docx (can Node.js / npx).
-REM Chay tu bat ky thu muc nao; script tu tro ve thu muc v2.
+REM Chay duoc tu bat ky thu muc nao: script tu tro ve thu muc goc du an.
 
 cd /d "%~dp0.."
 
