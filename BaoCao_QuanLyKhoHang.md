@@ -1188,7 +1188,7 @@ Bảng 4.11: Phương thức của lớp LichSuThaoTac
 - **n - 1**: ChiTiet - HangHoa; HangHoa - NhomHangHoa; HangHoa - DonViTinh.
 - **Bất biến nghiệp vụ**: tồn kho chỉ thay đổi qua ba phương thức tangTon / giamTon / ganTheoKiemKe, và chỉ khi phiếu tương ứng được **duyệt**.
 ## 4.8. Kết luận chương
-Chương 4 hoàn thành phân tích cấu trúc: biểu đồ lớp tổng thể theo ba nhóm dữ liệu (Hình 4.1 - 4.3) và **tám biểu đồ lớp cắt lát** theo nhóm entity (Hình 4.4 - 4.11) phủ toàn bộ UC01 - UC34. Thuộc tính (Bảng 4.3), phương thức (Bảng 4.4 - 4.11) và quan hệ đã được mô tả nhất quán; các phương thức then chốt sẽ xuất hiện lại đúng tên trên biểu đồ trình tự ở Chương 5.
+Chương 4 hoàn thành phân tích cấu trúc: biểu đồ lớp tổng thể theo ba nhóm dữ liệu (Hình 4.1 - 4.3) và **tám biểu đồ lớp cắt lát** theo nhóm entity (Hình 4.4 - 4.11) phủ toàn bộ UC01 - UC34.
 <!-- @pagebreak -->
 # CHƯƠNG 5: PHÂN TÍCH HÀNH VI
 Chương này thực hiện giai đoạn phân tích thứ ba - **phân tích hành vi**: dùng biểu đồ trình tự (sequence) mô tả tương tác giữa các đối tượng theo thời gian cho **từng use case**, và biểu đồ trạng thái (state machine) mô tả vòng đời của đối tượng phiếu.
@@ -1320,7 +1320,8 @@ Hình 5.35: phiếu nhập đi qua các trạng thái Mới tạo --> Chờ duy�
 ![Hình 5.36: Biểu đồ trạng thái phiếu xuất kho](diagram/png/5.36_state_phieuxuat.png)
 Hình 5.36: đối xứng với phiếu nhập; khi "Đã duyệt", hệ thống **giảm** tồn (giamTon) và phiếu chuyển "Đã xuất kho" - nhất quán với UC28 và Hình 5.28.
 ## 5.3. Kết luận chương
-Chương 5 hoàn thành phân tích hành vi với **34 biểu đồ trình tự** tương ứng 34 use case (Hình 5.1 - 5.34) và **2 biểu đồ trạng thái** cho phiếu nhập / phiếu xuất (Hình 5.35, 5.36). Mọi thông điệp trên biểu đồ trình tự khớp phương thức khai báo ở biểu đồ lớp Chương 4; số bước luồng chính trong đặc tả (mục 3.7) khớp số thông điệp đánh số. Ba giai đoạn phân tích - chức năng (Chương 3), cấu trúc (Chương 4), hành vi (Chương 5) - đã khép kín; hai chương tiếp theo chuyển sang thiết kế.
+Chương 5 hoàn thành phân tích hành vi với **34 biểu đồ trình tự** tương ứng 34 use case và **2 biểu đồ trạng thái** cho phiếu nhập / phiếu xuất.
+Ba giai đoạn phân tích - chức năng (Chương 3), cấu trúc (Chương 4), hành vi (Chương 5) - đã hoàn thành, các chương tiếp theo chuyển sang thiết kế.
 <!-- @pagebreak -->
 # CHƯƠNG 6: KIẾN TRÚC HỆ THỐNG
 Sau ba giai đoạn phân tích (chức năng - cấu trúc - hành vi), chương này chuyển sang **thiết kế**: kiến trúc thành phần của hệ thống và các quan hệ lớp phục vụ triển khai.
@@ -1336,7 +1337,7 @@ Hình 6.1 mô tả kiến trúc triển khai logic theo tầng:
 Mũi tên từ trên xuống thể hiện chiều phụ thuộc: UI không gọi thẳng Database mà đi qua Controller, Service rồi Repository. Kiến trúc này nhất quán với các biểu đồ trình tự ở Chương 5 và đáp ứng NFR-04 về tính mở rộng.
 ## 6.2. Quan hệ chính giữa các lớp (thiết kế)
 Các quan hệ lớp mang sang thiết kế (làm cơ sở đặt khóa ngoại ở Chương 7):
-- NguoiDung 1 - n PhieuNhapKho / PhieuXuatKho / PhieuKiemKe (người lập phiếu).
+- NguoiDung 1 - n PhieuNhapKho / PhieuXuatKho / PhieuKiemKe.
 - NhaCungCap 1 - n PhieuNhapKho; PhieuXuatKho ghi thông tin người nhận ở LyDoXuat / GhiChu.
 - Phiếu 1 - n Chi tiết; Chi tiết n - 1 HangHoa.
 - Kho 1 - n TonKho; HangHoa 1 - n TonKho (khóa phức hợp MaKho, MaHangHoa).
@@ -1432,13 +1433,3 @@ Hình 8.1 mô tả người dùng đi từ màn hình nào sang màn hình nào:
 - Mỗi hộp màn hình gắn mã UC để truy vết thiết kế giao diện về phân tích chức năng.
 
 Sơ đồ không mô tả layout chi tiết từng form mà mô tả cấu trúc menu / luồng màn hình phục vụ triển khai UI. Các màn hình chính: Đăng nhập; Trang chủ; bốn màn danh mục (Tài khoản, NCC, Hàng hóa, Kho - mỗi màn đủ thêm / sửa / xóa / tìm / xem); Phiếu nhập; Phiếu xuất; Kiểm kê; Báo cáo nhập - xuất - tồn (chọn điều kiện, bảng kết quả, nút xuất Excel).
-## 8.2. Kết luận chương
-Chương 8 hoàn tất thiết kế giao diện với sơ đồ điều hướng màn hình gắn mã use case (Hình 8.1). Đến đây báo cáo khép kín chuỗi truy vết: yêu cầu (FR) --> use case --> biểu đồ trình tự --> lớp / phương thức --> bảng CSDL --> màn hình.
-<!-- @pagebreak -->
-# TÀI LIỆU THAM KHẢO
-1. G. Booch, J. Rumbaugh, and I. Jacobson, *The Unified Modeling Language User Guide*, 2nd ed. Boston, MA: Addison-Wesley, 2005.
-2. C. Larman, *Applying UML and Patterns: An Introduction to Object-Oriented Analysis and Design and Iterative Development*, 3rd ed. Upper Saddle River, NJ: Prentice Hall, 2004.
-3. I. Sommerville, *Software Engineering*, 10th ed. Harlow, England: Pearson, 2016.
-4. Nguyễn Nhật Quang, *Bài giảng Phân tích và Thiết kế Hệ thống*, Trường Công nghệ Thông tin và Truyền thông, Đại học Bách khoa Hà Nội.
-5. Gin Web Framework, "Gin documentation," https://gin-gonic.com/docs/, và Meta Platforms, "React documentation," https://react.dev/, truy cập tháng 7 năm 2026.
-6. The PostgreSQL Global Development Group, "PostgreSQL documentation," https://www.postgresql.org/docs/, truy cập tháng 7 năm 2026.
