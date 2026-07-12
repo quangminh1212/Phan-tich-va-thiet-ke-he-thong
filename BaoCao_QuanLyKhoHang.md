@@ -211,9 +211,17 @@ MỤC LỤC
         7.2.2. Bảng TonKho
         7.2.3. Bảng PhieuNhapKho / PhieuXuatKho
         7.2.4. Bảng PhieuKiemKe
-    7.3. Thiết kế giao diện
-        7.3.1. Sơ đồ điều hướng màn hình
-    7.4. Kết luận chương
+    7.3. Kết luận chương
+**CHƯƠNG 8: THIẾT KẾ GIAO DIỆN**
+    8.1. Sơ đồ điều hướng màn hình
+    8.2. Màn hình đăng nhập
+    8.3. Màn hình quản lý hàng hóa
+    8.4. Màn hình danh sách phiếu nhập kho
+    8.5. Màn hình lập phiếu nhập kho
+    8.6. Màn hình duyệt phiếu nhập
+    8.7. Màn hình kiểm kê tồn kho
+    8.8. Màn hình báo cáo nhập - xuất - tồn
+    8.9. Kết luận chương
 **TÀI LIỆU THAM KHẢO**
 <!-- @pagebreak -->
 <!-- @style align=center size=16 bold /-->
@@ -275,6 +283,13 @@ Hình 5.35: Biểu đồ trạng thái phiếu nhập kho
 Hình 5.36: Biểu đồ trạng thái phiếu xuất kho
 Hình 6.1: Component diagram kiến trúc phân lớp
 Hình 8.1: Sơ đồ điều hướng màn hình
+Hình 8.2: Màn hình đăng nhập
+Hình 8.3: Màn hình quản lý hàng hóa
+Hình 8.4: Màn hình danh sách phiếu nhập kho
+Hình 8.5: Màn hình lập phiếu nhập kho
+Hình 8.6: Màn hình chi tiết và duyệt phiếu nhập
+Hình 8.7: Màn hình kiểm kê tồn kho
+Hình 8.8: Màn hình báo cáo nhập - xuất - tồn
 <!-- @pagebreak -->
 <!-- @style align=center size=16 bold /-->
 DANH MỤC THUẬT NGỮ VÀ VIẾT TẮT
@@ -1433,3 +1448,78 @@ Hình 8.1 mô tả người dùng đi từ màn hình nào sang màn hình nào:
 - Mỗi hộp màn hình gắn mã UC để truy vết thiết kế giao diện về phân tích chức năng.
 
 Sơ đồ không mô tả layout chi tiết từng form mà mô tả cấu trúc menu / luồng màn hình phục vụ triển khai UI. Các màn hình chính: Đăng nhập; Trang chủ; bốn màn danh mục (Tài khoản, NCC, Hàng hóa, Kho - mỗi màn đủ thêm / sửa / xóa / tìm / xem); Phiếu nhập; Phiếu xuất; Kiểm kê; Báo cáo nhập - xuất - tồn (chọn điều kiện, bảng kết quả, nút xuất Excel).
+## 8.2. Màn hình đăng nhập
+![Hình 8.2: Màn hình đăng nhập](diagram/png/8.2_screen_login.png)
+Hình 8.2 là điểm vào duy nhất của hệ thống (UC01). Màn hình gồm một thẻ form đặt giữa trang với tiêu đề hệ thống, ô nhập Tên đăng nhập, ô nhập Mật khẩu (ký tự được che) và nút Đăng nhập.
+
+Các thao tác thực hiện được:
+- Nhập tên đăng nhập, mật khẩu rồi ấn Đăng nhập (hoặc phím Enter): hệ thống xác thực và chuyển tới màn hình làm việc theo vai trò (Quản trị viên vào Tài khoản; Quản lý kho / Nhân viên kho vào Hàng hóa).
+- Nhập sai tài khoản / mật khẩu hoặc tài khoản bị khóa: thông báo lỗi màu đỏ hiển thị ngay dưới ô nhập, người dùng nhập lại mà không rời màn hình.
+
+## 8.3. Màn hình quản lý hàng hóa
+![Hình 8.3: Màn hình quản lý hàng hóa](diagram/png/8.3_screen_hanghoa.png)
+Hình 8.3 là màn hình danh mục tiêu biểu (UC13 - UC17); các màn Nhà cung cấp, Kho, Tài khoản dùng chung bố cục này. Bên trái là thanh menu điều hướng theo vai trò (khớp Hình 8.1); trên cùng là tên người dùng - vai trò và nút Đăng xuất. Vùng chính gồm: ô từ khóa tìm kiếm, nút Tìm kiếm, nút Thêm mới, bộ đếm tổng số bản ghi và bảng dữ liệu (Mã, Tên hàng, Nhóm, ĐVT, Giá nhập, Giá xuất, Tổng tồn, Trạng thái dạng nhãn màu Đang dùng / Ngừng) kèm nút Sửa, Xóa trên từng dòng.
+
+Các thao tác thực hiện được:
+- Gõ từ khóa rồi ấn Tìm kiếm để lọc theo mã / tên hàng (UC16); để trống từ khóa thì hiển thị toàn bộ danh sách (UC17).
+- Ấn Thêm mới để mở form nhập thông tin hàng hóa; ấn Lưu thì bản ghi được tạo và tồn kho khởi tạo bằng 0 tại mọi kho (UC13).
+- Ấn Sửa trên một dòng để mở form với dữ liệu hiện tại và cập nhật (UC14).
+- Ấn Xóa rồi xác nhận: hàng chưa phát sinh phiếu bị xóa hẳn, hàng đã có phiếu chuyển sang trạng thái Ngừng (UC15).
+- Ấn một mục trên menu trái để chuyển màn hình; ấn Đăng xuất để kết thúc phiên (UC02).
+
+## 8.4. Màn hình danh sách phiếu nhập kho
+![Hình 8.4: Màn hình danh sách phiếu nhập kho](diagram/png/8.4_screen_phieunhap.png)
+Hình 8.4 là màn hình quản lý phiếu nhập (UC26, UC27); màn Phiếu xuất dùng chung bố cục. Thanh công cụ gồm ô tìm theo mã phiếu, hộp chọn lọc trạng thái, nút Tìm kiếm và nút Lập phiếu. Bảng liệt kê Mã phiếu, NCC, Kho, Ngày, Tổng tiền và Trạng thái bằng nhãn màu (Chờ duyệt vàng, Đã duyệt xanh, Từ chối đỏ); dòng nào cũng có nút Xem, riêng phiếu Chờ duyệt có thêm Sửa và Xóa.
+
+Các thao tác thực hiện được:
+- Chọn trạng thái / gõ mã phiếu rồi ấn Tìm kiếm để lọc danh sách (UC26).
+- Ấn Lập phiếu để mở form lập phiếu nhập (mục 8.5, UC23).
+- Ấn Xem để mở chi tiết phiếu (mục 8.6); ấn Sửa để chỉnh phiếu còn Chờ duyệt (UC24); ấn Xóa rồi xác nhận để hủy phiếu chưa duyệt (UC25) - phiếu Đã duyệt không sửa / xóa được.
+
+## 8.5. Màn hình lập phiếu nhập kho
+![Hình 8.5: Màn hình lập phiếu nhập kho](diagram/png/8.5_screen_lapphieu.png)
+Hình 8.5 là form lập phiếu nhập (UC23) hiển thị dạng cửa sổ nổi trên danh sách. Phần thông tin chung gồm hộp chọn Nhà cung cấp, hộp chọn Kho và ô Ngày (mặc định ngày hiện tại). Phần Dòng hàng là bảng động: mỗi dòng có hộp chọn hàng hóa, ô Số lượng, ô Đơn giá và nút x đỏ để bỏ dòng; dưới bảng là nút + Thêm dòng. Cuối form là nút Hủy và nút Lập phiếu (gửi duyệt).
+
+Các thao tác thực hiện được:
+- Chọn nhà cung cấp, kho, ngày nhập; ấn + Thêm dòng để bổ sung dòng hàng, chọn hàng thì đơn giá tự điền theo giá nhập trong danh mục; ấn x để bỏ một dòng.
+- Ấn Lập phiếu (gửi duyệt): hệ thống kiểm tra dữ liệu, tính thành tiền / tổng tiền và tạo phiếu ở trạng thái Chờ duyệt; thiếu NCC, kho hay dòng hàng thì báo lỗi ngay trên form.
+- Ấn Hủy để đóng form, không lưu gì.
+
+## 8.6. Màn hình duyệt phiếu nhập
+![Hình 8.6: Màn hình chi tiết và duyệt phiếu nhập](diagram/png/8.6_screen_duyetphieu.png)
+Hình 8.6 là cửa sổ chi tiết phiếu khi ấn Xem: hiển thị mã phiếu, NCC, kho, người lập, nhãn trạng thái và bảng dòng hàng (hàng hóa, số lượng, đơn giá, thành tiền). Với người dùng vai trò Quản lý kho và phiếu đang Chờ duyệt, cửa sổ có thêm hai nút nghiệp vụ: Từ chối (đỏ) và Duyệt phiếu (xanh); luôn có nút Đóng.
+
+Các thao tác thực hiện được:
+- Ấn Duyệt phiếu: phiếu chuyển Đã duyệt và tồn kho được cộng theo từng dòng hàng - đây là bước duy nhất làm thay đổi tồn (khớp biểu đồ trạng thái Hình 5.35).
+- Ấn Từ chối: nhập lý do, phiếu chuyển Từ chối, tồn kho không đổi.
+- Ấn Đóng để quay lại danh sách mà không thay đổi gì; Nhân viên kho mở phiếu chỉ thấy nút Đóng (không có quyền duyệt).
+
+## 8.7. Màn hình kiểm kê tồn kho
+![Hình 8.7: Màn hình kiểm kê tồn kho](diagram/png/8.7_screen_kiemke.png)
+Hình 8.7 là màn hình kiểm kê (UC33) với cửa sổ chi tiết một phiếu đang Chờ duyệt. Màn nền gồm hộp chọn kho, nút Lập phiếu kiểm kê và danh sách phiếu đã lập. Cửa sổ chi tiết hiển thị mã phiếu - kho, nhãn trạng thái, dòng nhắc "tồn chỉ thay đổi sau khi quản lý duyệt điều chỉnh" và bảng các dòng: Hàng hóa, SL sổ sách (nạp tự động từ tồn kho), ô nhập SL thực tế và cột Chênh lệch tự tính.
+
+Các thao tác thực hiện được:
+- Chọn kho rồi ấn Lập phiếu kiểm kê: hệ thống tạo phiếu và nạp sẵn số lượng sổ sách của toàn bộ mặt hàng trong kho.
+- Ấn Mở trên một phiếu để xem / nhập liệu; gõ SL thực tế từng dòng (chênh lệch tự cập nhật) rồi ấn Lưu SL thực tế.
+- Quản lý kho ấn Duyệt điều chỉnh: tồn kho được gán bằng số thực tế cho các dòng lệch; ấn Yêu cầu kiểm lại để từ chối; ấn Đóng để quay lại danh sách.
+
+## 8.8. Màn hình báo cáo nhập - xuất - tồn
+![Hình 8.8: Màn hình báo cáo nhập - xuất - tồn](diagram/png/8.8_screen_baocao.png)
+Hình 8.8 là màn hình báo cáo NXT (UC34), chỉ xuất hiện trên menu của Quản lý kho. Thanh lọc gồm hai ô ngày (Từ / đến), hộp chọn kho, nút Xem báo cáo và nút Xuất CSV. Bảng kết quả gồm các cột Mã hàng, Tên hàng, Tồn đầu, Nhập, Xuất, Điều chỉnh KK và Tồn cuối (in đậm); số liệu chỉ tổng hợp từ các phiếu đã duyệt.
+
+Các thao tác thực hiện được:
+- Chọn kỳ báo cáo và kho (hoặc Tất cả kho) rồi ấn Xem báo cáo để tổng hợp số liệu.
+- Ấn Xuất CSV để tải bảng kết quả về file bao-cao-nxt_<từ ngày>_<đến ngày>.csv mở được bằng Excel.
+
+## 8.9. Kết luận chương
+Chương 8 hoàn tất thiết kế giao diện: sơ đồ điều hướng màn hình gắn mã use case (Hình 8.1) và bảy màn hình tiêu biểu (Hình 8.2 - 8.8) mô tả bố cục cùng các thao tác của người dùng, phủ các nhóm chức năng chính: đăng nhập, danh mục, phiếu nhập với luồng lập - duyệt, kiểm kê và báo cáo. Đến đây báo cáo khép kín chuỗi truy vết: yêu cầu (FR) --> use case --> biểu đồ trình tự --> lớp / phương thức --> bảng CSDL --> màn hình.
+
+<!-- @pagebreak -->
+
+# TÀI LIỆU THAM KHẢO
+1. G. Booch, J. Rumbaugh, and I. Jacobson, *The Unified Modeling Language User Guide*, 2nd ed. Boston, MA: Addison-Wesley, 2005.
+2. C. Larman, *Applying UML and Patterns: An Introduction to Object-Oriented Analysis and Design and Iterative Development*, 3rd ed. Upper Saddle River, NJ: Prentice Hall, 2004.
+3. I. Sommerville, *Software Engineering*, 10th ed. Harlow, England: Pearson, 2016.
+4. Nguyễn Nhật Quang, *Bài giảng Phân tích và Thiết kế Hệ thống*, Trường Công nghệ Thông tin và Truyền thông, Đại học Bách khoa Hà Nội.
+5. Gin Web Framework, "Gin documentation," https://gin-gonic.com/docs/, và Meta Platforms, "React documentation," https://react.dev/, truy cập tháng 7 năm 2026.
+6. The PostgreSQL Global Development Group, "PostgreSQL documentation," https://www.postgresql.org/docs/, truy cập tháng 7 năm 2026.
