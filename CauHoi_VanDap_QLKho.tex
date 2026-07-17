@@ -1,0 +1,560 @@
+% !TeX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{fontspec}
+% Font Unicode tiếng Việt (Windows) — không cần polyglossia
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Consolas}
+\XeTeXlinebreaklocale "vi"
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm, top=2.2cm, bottom=2.2cm}
+\setlength{\headheight}{14pt}
+
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage{setspace}
+\onehalfspacing
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  urlcolor=blue!50!black
+}
+
+\definecolor{qblue}{RGB}{0,70,127}
+\definecolor{abg}{RGB}{245,248,252}
+\definecolor{thead}{RGB}{0,70,127}
+
+\titleformat{\section}{\Large\bfseries\color{qblue}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{qblue!80!black}}{\thesubsection.}{0.5em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Câu hỏi vấn đáp -- PT\&TK hệ thống QL kho}
+\fancyhead[R]{\small Nhóm 202490032}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newtcolorbox{cauhoi}[1][]{
+  enhanced,
+  breakable,
+  colback=abg,
+  colframe=qblue,
+  boxrule=0.6pt,
+  arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+  fonttitle=\bfseries,
+  title={#1}
+}
+
+\newcommand{\cau}[1]{\textbf{\textcolor{qblue}{Câu hỏi:}} #1}
+\newcommand{\traloi}{\par\smallskip\textbf{\textcolor{qblue!70!black}{Gợi ý trả lời:}}\par}
+\newcommand{\goiy}[1]{\textit{(Gợi ý ngắn: #1)}}
+
+\begin{document}
+
+\begin{center}
+  {\large\bfseries ĐẠI HỌC BÁCH KHOA HÀ NỘI}\\[2pt]
+  {\normalsize Trường Công nghệ Thông tin và Truyền thông}\\[10pt]
+  {\LARGE\bfseries\color{qblue} CÂU HỎI VẤN ĐÁP THƯỜNG GẶP}\\[4pt]
+  {\Large\bfseries Phân tích và thiết kế hệ thống quản lý kho hàng}\\[8pt]
+  {\normalsize Phương pháp hướng đối tượng -- UML}\\[6pt]
+  {\small GVHD: Ths.\ Phạm Thị Phương Giang \quad Lớp: B 2CQ -- CNTT -- K69(01)}\\[2pt]
+  {\small Nhóm: 202490032 -- Bùi Tuấn Anh và các thành viên}
+\end{center}
+
+\vspace{4pt}
+\noindent\rule{\textwidth}{0.8pt}
+
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Tổng quan đề tài \& khảo sát hiện trạng}
+% ============================================================
+
+\begin{cauhoi}[Câu 1]
+\cau{Đề tài của nhóm là gì? Mục tiêu chính là gì?}
+\traloi
+Đề tài: \textbf{Phân tích và thiết kế hệ thống quản lý kho hàng} theo phương pháp \textbf{hướng đối tượng (OO)} với ngôn ngữ mô hình hóa \textbf{UML}.
+
+Mục tiêu: số hóa quy trình quản lý hàng hóa, nhập/xuất/kiểm kê; tra cứu tồn kho nhanh -- chính xác; hỗ trợ nhiều kho, nhiều mặt hàng, nhiều NCC; chỉ thay đổi tồn khi phiếu được \textbf{duyệt}; phân quyền theo vai trò; lưu vết thao tác (audit log).
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 2]
+\cau{Phạm vi hệ thống là gì? Cái gì nằm ngoài phạm vi?}
+\traloi
+\textbf{Trong phạm vi:} quản lý hàng hóa, nhóm hàng, ĐVT; nhà cung cấp; danh mục kho; nhập kho, xuất kho, kiểm kê; tồn kho theo thời gian thực / cảnh báo tồn thấp; tài khoản, phân quyền, lịch sử thao tác; báo cáo nhập -- xuất -- tồn (NXT).
+
+\textbf{Ngoài phạm vi:} không xử lý nghiệp vụ \textbf{kế toán -- hóa đơn}; không quản lý danh mục khách hàng chi tiết (xuất chỉ ghi lý do / người nhận).
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 3]
+\cau{Hiện trạng quản lý kho trước khi có hệ thống có hạn chế gì?}
+\traloi
+Quản lý bằng \textbf{sổ sách + Excel rời rạc}:
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item Dữ liệu phân tán, khó đối chiếu nhiều kho;
+  \item Thiếu kiểm soát thời gian thực (dễ xuất quá tồn);
+  \item Khó truy vết người thực hiện;
+  \item Báo cáo chậm, sai sót nhập liệu cao;
+  \item Khó mở rộng khi số lượng giao dịch tăng.
+\end{itemize}
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 4]
+\cau{Hệ thống có những tác nhân (actor) nào? Mỗi người làm gì?}
+\traloi
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item \textbf{Quản trị viên (QTV):} quản lý tài khoản, phân quyền; đăng nhập/đăng xuất. \emph{Không} thao tác kho, phiếu, báo cáo.
+  \item \textbf{Quản lý kho:} quản lý danh mục kho; duyệt phiếu nhập/xuất/kiểm kê; quản lý NCC, hàng hóa; xem báo cáo NXT.
+  \item \textbf{Nhân viên kho:} lập/sửa phiếu nhập, xuất, kiểm kê; quản lý danh mục NCC, hàng hóa.
+\end{itemize}
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 5]
+\cau{Yêu cầu chức năng (FR) và phi chức năng (NFR) chính là gì?}
+\traloi
+\textbf{FR (10):} đăng nhập/phiên; CRUD tài khoản; CRUD NCC; CRUD hàng hóa; CRUD kho; phiếu nhập; phiếu xuất; kiểm kê; báo cáo NXT; ghi lịch sử thao tác.
+
+\textbf{NFR (5):} hiệu năng (phản hồi $\leq 2$s, $\geq 50$ user); bảo mật (mã hóa mật khẩu, phân quyền, log); khả dụng 99\% + sao lưu; mở rộng (kiến trúc phân lớp); thân thiện (UI tiếng Việt, responsive).
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 6]
+\cau{Nhóm chọn công nghệ triển khai gì? Vì sao?}
+\traloi
+Mô hình web đa tầng:
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item Backend: \textbf{Go + Gin + GORM} (hiệu năng, đồng thời tốt, REST API, transaction khi duyệt phiếu);
+  \item CSDL: \textbf{PostgreSQL} (toàn vẹn PK/FK);
+  \item Frontend: \textbf{React + Vite};
+  \item Xác thực: \textbf{JWT}, phân quyền theo vai trò;
+  \item Công cụ vẽ UML: draw.io; triển khai CSDL: Docker Compose.
+\end{itemize}
+\end{cauhoi}
+
+% ============================================================
+\section{Phân tích hướng đối tượng -- các loại biểu đồ}
+% ============================================================
+
+\begin{cauhoi}[Câu 7 -- CÂU HAY HỎI]
+\cau{Phân tích hướng đối tượng dùng những loại biểu đồ gì? Mỗi biểu đồ thuộc giai đoạn nào?}
+\traloi
+Theo khung OO/UML của báo cáo (Bảng 1.3), các giai đoạn và biểu đồ:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{3.5cm}|p{6.0cm}|p{2.2cm}|}
+\hline
+\textbf{Giai đoạn} & \textbf{Biểu đồ (EN + VN)} & \textbf{Chương} \\
+\hline
+Mô tả nghiệp vụ & Activity -- Biểu đồ hoạt động & Ch.\ 2 \\
+\hline
+Phân tích chức năng & Use Case -- Biểu đồ ca sử dụng & Ch.\ 3 \\
+\hline
+Phân tích cấu trúc & Class -- Biểu đồ lớp & Ch.\ 4 \\
+\hline
+Phân tích hành vi & Sequence + State -- Trình tự + Trạng thái & Ch.\ 5 \\
+\hline
+Kiến trúc hệ thống & Component -- Biểu đồ thành phần & Ch.\ 6 \\
+\hline
+Thiết kế CSDL & Bảng CSDL, từ điển dữ liệu & Ch.\ 6/7 \\
+\hline
+Thiết kế giao diện & Sơ đồ điều hướng màn hình & Ch.\ 7 \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Ba giai đoạn phân tích cốt lõi:} Chức năng $\rightarrow$ Cấu trúc $\rightarrow$ Hành vi.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 8 -- CÂU HAY HỎI]
+\cau{Giải thích từng biểu đồ: \textbf{ý nghĩa tên} + \textbf{ý nghĩa / mục đích biểu đồ} + \textbf{áp dụng trong đề tài}.}
+\traloi
+
+\subsection*{1) Biểu đồ hoạt động (Activity Diagram)}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+  \item \textbf{Ý nghĩa tên:} \textit{Activity} = hoạt động / bước xử lý trong quy trình nghiệp vụ.
+  \item \textbf{Ý nghĩa biểu đồ:} mô tả \textbf{luồng công việc} (workflow) theo thời gian: bước nào làm trước/sau, điểm quyết định (hình thoi), nhánh lặp/sửa sai.
+  \item \textbf{Trong đề tài:} Hình 2.1 nhập kho, 2.2 xuất kho, 2.3 kiểm kê -- làm rõ ``tồn chỉ đổi sau khi duyệt''.
+\end{itemize}
+
+\subsection*{2) Biểu đồ use case (Use Case Diagram)}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+  \item \textbf{Ý nghĩa tên:} \textit{Use Case} = ``ca sử dụng'' -- một mục tiêu cụ thể mà tác nhân muốn đạt khi dùng hệ thống.
+  \item \textbf{Ý nghĩa biểu đồ:} xác định \textbf{ranh giới hệ thống}, \textbf{ai} dùng (actor), \textbf{làm gì} (oval use case), quan hệ include/extend.
+  \item \textbf{Trong đề tài:} Hình 3.1 tổng quát + 3.2--3.5 phân rã; 34 UC (UC01--UC34); đặc tả đầy đủ tiền/hậu điều kiện, luồng chính/ngoại lệ.
+\end{itemize}
+
+\subsection*{3) Biểu đồ lớp (Class Diagram)}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+  \item \textbf{Ý nghĩa tên:} \textit{Class} = lớp đối tượng -- khuôn mẫu gồm thuộc tính + phương thức.
+  \item \textbf{Ý nghĩa biểu đồ:} mô tả \textbf{cấu trúc tĩnh}: hệ thống gồm những lớp nào, thuộc tính/phương thức, quan hệ (1..*, association, composition\ldots).
+  \item \textbf{Trong đề tài:} nhóm Master Data (Hình 4.1), nhập--xuất (4.2), kiểm kê/lịch sử (4.3); cắt lát theo entity (Hình 4.4--4.11) gồm ManHinh / DieuKhien / Entity.
+\end{itemize}
+
+\subsection*{4) Biểu đồ trình tự (Sequence Diagram)}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+  \item \textbf{Ý nghĩa tên:} \textit{Sequence} = trình tự -- thứ tự thời gian các thông điệp giữa đối tượng.
+  \item \textbf{Ý nghĩa biểu đồ:} mô tả \textbf{hành vi động theo thời gian}: ai gọi ai, message nào, khi nào trả về.
+  \item \textbf{Trong đề tài:} 34 biểu đồ trình tự (Hình 5.1--5.34), mỗi UC một sequence; ví dụ UC23: ManHinh $\rightarrow$ DieuKhien $\rightarrow$ PhieuNhapKho $\rightarrow$ TonKho.tangTon.
+\end{itemize}
+
+\subsection*{5) Biểu đồ trạng thái (State Diagram / State Machine)}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+  \item \textbf{Ý nghĩa tên:} \textit{State} = trạng thái vòng đời của \textbf{một đối tượng} theo thời gian.
+  \item \textbf{Ý nghĩa biểu đồ:} đối tượng chuyển trạng thái nào khi có sự kiện (duyệt, từ chối\ldots).
+  \item \textbf{Trong đề tài:} Hình 5.35 phiếu nhập, 5.36 phiếu xuất: \textbf{Mới tạo $\rightarrow$ Chờ duyệt $\rightarrow$ Đã duyệt / Từ chối}.
+\end{itemize}
+
+\subsection*{6) Biểu đồ thành phần (Component Diagram)}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+  \item \textbf{Ý nghĩa tên:} \textit{Component} = thành phần triển khai / module phần mềm.
+  \item \textbf{Ý nghĩa biểu đồ:} kiến trúc hệ thống gồm những khối (UI, API, DB\ldots), phụ thuộc nhau thế nào.
+  \item \textbf{Trong đề tài:} tầng giao diện React, tầng API Go/Gin, tầng CSDL PostgreSQL.
+\end{itemize}
+
+\subsection*{7) Sơ đồ điều hướng màn hình}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+  \item \textbf{Ý nghĩa tên:} ``điều hướng'' = đường đi người dùng giữa các màn hình.
+  \item \textbf{Ý nghĩa:} thiết kế UI -- từ login đến các module nghiệp vụ (hàng hóa, phiếu nhập, kiểm kê, báo cáo\ldots).
+\end{itemize}
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 9]
+\cau{Phân biệt Sequence và State? Khi nào dùng cái nào?}
+\traloi
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item \textbf{Sequence:} nhiều đối tượng \textbf{tương tác với nhau} theo thứ tự thời gian (ai gọi ai) -- dùng cho \textbf{mỗi use case}.
+  \item \textbf{State:} \textbf{một} đối tượng (phiếu) thay đổi trạng thái nội tại -- dùng khi vòng đời phức tạp (duyệt / từ chối).
+\end{itemize}
+Ví dụ: sequence UC23 mô tả bước lập--duyệt--cộng tồn; state của PhieuNhapKho cho biết phiếu đang ``Chờ duyệt'' hay ``Đã duyệt''.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 10]
+\cau{Phân biệt Activity và Sequence?}
+\traloi
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item \textbf{Activity:} góc nhìn \textbf{nghiệp vụ / quy trình} (bước công việc, quyết định duyệt/từ chối) -- chưa chi tiết đối tượng phần mềm.
+  \item \textbf{Sequence:} góc nhìn \textbf{đối tượng phần mềm} (ManHinh, DieuKhien, Entity) trao đổi message.
+\end{itemize}
+Activity vẽ trước (Ch.\ 2), Sequence vẽ sau khi đã có UC + lớp (Ch.\ 5).
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 11]
+\cau{Phân biệt Use Case và Class?}
+\traloi
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item \textbf{Use case:} hệ thống \textbf{làm gì} cho ai (chức năng / mục tiêu).
+  \item \textbf{Class:} hệ thống \textbf{cấu tạo từ gì} (lớp, thuộc tính, quan hệ).
+\end{itemize}
+Từ danh từ trong đặc tả UC $\rightarrow$ ứng viên lớp (HangHoa, PhieuNhapKho, TonKho\ldots).
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 12]
+\cau{UML là gì? Vì sao chọn hướng đối tượng?}
+\traloi
+\textbf{UML} (\textit{Unified Modeling Language}) = ngôn ngữ mô hình hóa thống nhất, chuẩn hóa ký hiệu để phân tích -- thiết kế phần mềm.
+
+\textbf{OO} giúp: đóng gói dữ liệu + hành vi trong lớp; tái sử dụng; ánh xạ tự nhiên sang code (GORM/ORM) và CSDL quan hệ; dễ mở rộng, bảo trì.
+\end{cauhoi}
+
+% ============================================================
+\section{Use case -- nguyên tắc \& quan hệ}
+% ============================================================
+
+\begin{cauhoi}[Câu 13 -- CÂU HAY HỎI]
+\cau{Vì sao không gộp ``Quản lý hàng hóa'' thành 1 use case duy nhất?}
+\traloi
+Nguyên tắc: \textbf{mỗi use case = một mục tiêu cụ thể} của tác nhân (ví dụ ``Thêm hàng hóa''), không phải gói công việc chung.
+
+``Quản lý hàng hóa'' là \textbf{nghiệp vụ / gói}; tách đủ 5 UC: Thêm / Sửa / Xóa / Tìm kiếm / Xem danh sách $\rightarrow$ dễ đặc tả, dễ vẽ sequence, dễ test và truy vết FR.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 14]
+\cau{Hệ thống có bao nhiêu use case? Phân nhóm thế nào?}
+\traloi
+\textbf{34 use case} (UC01--UC34):
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item UC01--02: Đăng nhập / Đăng xuất;
+  \item UC03--07: Tài khoản;
+  \item UC08--12: Nhà cung cấp;
+  \item UC13--17: Hàng hóa;
+  \item UC18--22: Kho;
+  \item UC23--27: Phiếu nhập;
+  \item UC28--32: Phiếu xuất;
+  \item UC33: Kiểm kê;
+  \item UC34: Báo cáo NXT.
+\end{itemize}
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 15]
+\cau{Quan hệ \texttt{include} trong use case nghĩa là gì? Ví dụ?}
+\traloi
+\texttt{«include»}: use case A \textbf{bắt buộc} thực hiện use case B.
+
+Ví dụ: các UC nghiệp vụ \textbf{include UC01 Đăng nhập} -- phải đăng nhập trước khi thao tác.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 16]
+\cau{Đặc tả use case gồm những thành phần nào?}
+\traloi
+Mã UC, tên, tác nhân chính, mô tả tóm tắt, \textbf{tiền điều kiện}, \textbf{luồng sự kiện chính}, \textbf{luồng ngoại lệ}, \textbf{hậu điều kiện}.
+
+Ví dụ UC23: tiền = đã login + có danh mục NCC/kho/hàng; hậu = phiếu ở trạng thái phù hợp; nếu duyệt thì tồn tăng + ghi log.
+\end{cauhoi}
+
+% ============================================================
+\section{Nghiệp vụ cốt lõi (nhập -- xuất -- kiểm kê -- tồn)}
+% ============================================================
+
+\begin{cauhoi}[Câu 17 -- CÂU HAY HỎI]
+\cau{Quy trình nhập kho diễn ra thế nào? Tồn kho khi nào tăng?}
+\traloi
+NV lập phiếu (chọn NCC, kho, dòng hàng) $\rightarrow$ gửi duyệt $\rightarrow$ QL duyệt thì \textbf{TonKho.tangTon}; từ chối thì tồn \textbf{không đổi}.
+
+\textbf{Chỉ khi phiếu được duyệt} tồn mới tăng -- không tăng ngay lúc lập phiếu.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 18 -- CÂU HAY HỎI]
+\cau{Xuất kho khác nhập kho điểm nào?}
+\traloi
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item Không gắn NCC; ghi lý do xuất / người nhận;
+  \item Khi thêm dòng: \textbf{kiểm tra tồn đủ} (\texttt{TonKho.kiemTraDu}) -- chặn xuất vượt tồn;
+  \item Duyệt thì \textbf{giảm tồn} (\texttt{giamTon}), không phải tăng.
+\end{itemize}
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 19]
+\cau{Kiểm kê xử lý chênh lệch thế nào?}
+\traloi
+Tạo phiếu theo kho $\rightarrow$ hệ thống nạp số theo sổ $\rightarrow$ NV nhập số thực tế $\rightarrow$ tính chênh lệch = thực tế $-$ sổ $\rightarrow$ QL duyệt điều chỉnh $\rightarrow$ \texttt{TonKho.ganTheoKiemKe} gán tồn = số thực tế.
+
+Tồn \textbf{không} đổi ngay khi nhập số đếm -- chỉ sau duyệt.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 20 -- CÂU HAY HỎI]
+\cau{Vì sao tồn kho chỉ thay đổi sau khi duyệt phiếu?}
+\traloi
+Để có \textbf{kiểm soát hai lớp} (NV lập -- QL duyệt), tránh sai sót / gian lận, đảm bảo số liệu kế toán/kho tin cậy. Phiếu chờ duyệt hoặc từ chối không làm lệch tồn thực tế trên hệ thống.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 21]
+\cau{Khi xóa NCC / hàng / kho đã phát sinh phiếu thì xử lý ra sao?}
+\traloi
+Không xóa cứng (mất lịch sử, phá toàn vẹn tham chiếu) -- chuyển \textbf{ngừng hoạt động / khóa}. Ví dụ UC10: NCC đã có phiếu nhập $\rightarrow$ chỉ \texttt{ngungHoatDong}.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 22]
+\cau{Báo cáo NXT lấy dữ liệu từ đâu?}
+\traloi
+Tổng hợp từ các phiếu nhập/xuất \textbf{đã duyệt} trong kỳ + tồn hiện tại (\texttt{TonKho}); lọc theo kỳ / kho / mặt hàng; có thể xuất Excel. Chỉ Quản lý kho xem (UC34).
+\end{cauhoi}
+
+% ============================================================
+\section{Biểu đồ lớp -- cấu trúc hệ thống}
+% ============================================================
+
+\begin{cauhoi}[Câu 23 -- CÂU HAY HỎI]
+\cau{Các lớp thực thể chính của hệ thống là gì?}
+\traloi
+NguoiDung, NhaCungCap, HangHoa, NhomHangHoa, DonViTinh, Kho, \textbf{TonKho}, PhieuNhapKho + ChiTietPhieuNhap, PhieuXuatKho + ChiTietPhieuXuat, PhieuKiemKe + ChiTietKiemKe, LichSuThaoTac.
+
+Ngoài ra mỗi nhóm có \textbf{ManHinh\ldots} (giao diện) và \textbf{DieuKhien\ldots} (điều khiển); báo cáo có lớp \textbf{BaoCaoNXT} (chỉ đọc).
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 24]
+\cau{Lớp TonKho quan trọng thế nào? Quan hệ ra sao?}
+\traloi
+TonKho lưu số lượng theo cặp \textbf{(kho, hàng)} -- trung tâm cập nhật khi duyệt nhập/xuất/kiểm kê.
+
+Quan hệ: Kho $1..*$ TonKho; HangHoa $1..*$ TonKho. Khi thêm hàng mới, khởi tạo tồn $= 0$ tại các kho.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 25]
+\cau{``Biểu đồ lớp cắt lát'' nghĩa là gì? Vì sao không vẽ 1 lớp cho từng UC CRUD?}
+\traloi
+Cắt lát theo \textbf{nhóm entity}: một biểu đồ gồm ManHinh + DieuKhien + Entity dùng chung cho cả nhóm UC (Thêm/Sửa/Xóa/Tìm/Xem).
+
+Không vẽ lặp 5 lần vì cấu trúc lớp giống nhau; khác biệt nằm ở \textbf{phương thức được gọi} -- thể hiện trên sequence.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 26]
+\cau{Mẫu master--detail xuất hiện ở đâu?}
+\traloi
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item PhieuNhapKho -- ChiTietPhieuNhap;
+  \item PhieuXuatKho -- ChiTietPhieuXuat;
+  \item PhieuKiemKe -- ChiTietKiemKe.
+\end{itemize}
+Header phiếu 1 -- nhiều dòng chi tiết; mỗi dòng trỏ một HangHoa.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 27]
+\cau{Lớp LichSuThaoTac phục vụ yêu cầu nào?}
+\traloi
+FR-10 (audit): ghi \textbf{ai -- làm gì -- lúc nào} cho nghiệp vụ quan trọng (đăng nhập, duyệt phiếu, CRUD\ldots). Quan hệ $1..*$ với NguoiDung.
+\end{cauhoi}
+
+% ============================================================
+\section{Hành vi -- sequence, state, CSDL, giao diện}
+% ============================================================
+
+\begin{cauhoi}[Câu 28]
+\cau{Trên sequence UC đăng nhập, các đối tượng nào tham gia?}
+\traloi
+Tác nhân $\rightarrow$ ManHinhDangNhap $\rightarrow$ DieuKhienTaiKhoan / xác thực $\rightarrow$ NguoiDung (kiểm tra TK/MK) $\rightarrow$ tạo phiên JWT $\rightarrow$ ghi LichSuThaoTac (nếu có) $\rightarrow$ phản hồi UI.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 29]
+\cau{Trạng thái phiếu nhập/xuất gồm những gì?}
+\traloi
+\textbf{Mới tạo} $\rightarrow$ \textbf{Chờ duyệt} (sau gửi duyệt) $\rightarrow$ \textbf{Đã duyệt} (cập nhật tồn) hoặc \textbf{Từ chối} (tồn không đổi).
+
+Chỉ sửa/xóa khi chưa duyệt (thường ở ``Chờ duyệt'' / chưa khóa).
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 30]
+\cau{Thiết kế CSDL có những bảng quan trọng nào?}
+\traloi
+Ánh xạ từ lớp entity: HangHoa, TonKho, PhieuNhapKho / ChiTietPhieuNhap, PhieuXuatKho / ChiTietPhieuXuat, PhieuKiemKe / ChiTietKiemKe, NguoiDung, Kho, NhaCungCap\ldots
+
+Dùng PK/FK bảo toàn vẹn; transaction khi duyệt phiếu (cập nhật trạng thái + tồn cùng lúc).
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 31]
+\cau{Phân biệt lớp phân tích và bảng CSDL?}
+\traloi
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item \textbf{Lớp:} có thuộc tính + \textbf{phương thức} (tangTon, duyetPhieu\ldots);
+  \item \textbf{Bảng:} lưu dữ liệu quan hệ (cột, PK, FK); hành vi nằm ở tầng service/API.
+\end{itemize}
+ORM (GORM) ánh xạ lớp $\leftrightarrow$ bảng.
+\end{cauhoi}
+
+% ============================================================
+\section{Câu hỏi so sánh, thiết kế \& ``bẫy'' thường gặp}
+% ============================================================
+
+\begin{cauhoi}[Câu 32]
+\cau{Hướng đối tượng khác hướng chức năng (cấu trúc) chỗ nào?}
+\traloi
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item \textbf{Chức năng:} phân rã theo hàm/tiến trình, dữ liệu tách rời;
+  \item \textbf{Đối tượng:} gói dữ liệu + hành vi trong lớp; mô hình hóa bằng Use Case / Class / Sequence / State.
+\end{itemize}
+Báo cáo chọn OO: chức năng $\rightarrow$ cấu trúc $\rightarrow$ hành vi.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 33]
+\cau{Actor khác class / user account thế nào?}
+\traloi
+\textbf{Actor} là \textbf{vai trò bên ngoài} hệ thống khởi tạo tương tác (QL kho, NV kho), không phải bảng CSDL.
+
+Một người thật có thể có 1 tài khoản (NguoiDung) gắn 1 vai trò; actor mô tả \textbf{góc nhìn use case}, không phải mọi bản ghi user.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 34]
+\cau{Vì sao QTV không xem báo cáo / không lập phiếu?}
+\traloi
+Nguyên tắc \textbf{phân tách nhiệm vụ (separation of duties)}: QTV chỉ quản trị truy cập; nghiệp vụ kho thuộc QL/NV kho $\rightarrow$ giảm rủi ro, đúng thực tế tổ chức.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 35]
+\cau{Nếu hai người cùng duyệt / cùng xuất một mặt hàng thì sao?}
+\traloi
+Cần transaction + kiểm tra tồn lúc duyệt; ràng buộc tồn $\geq 0$; có thể khóa dòng TonKho khi cập nhật. Sequence xuất đã có \texttt{kiemTraDu}; NFR hiệu năng/đồng thời (50 user) đòi hỏi xử lý concurrency ở tầng CSDL.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 36]
+\cau{Nhóm đã làm gì để truy vết từ yêu cầu đến thiết kế?}
+\traloi
+FR-xx $\rightarrow$ UC-xx $\rightarrow$ lớp (Bảng 4.1, 4.2) $\rightarrow$ sequence tương ứng $\rightarrow$ bảng CSDL + màn hình.
+
+Ví dụ: FR-06 $\leftrightarrow$ UC23--27 $\leftrightarrow$ PhieuNhapKho/ChiTiet/TonKho $\leftrightarrow$ Hình 5.23--5.27.
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 37]
+\cau{Điểm sáng / đóng góp của đề tài là gì?}
+\traloi
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item Phân tích OO đầy đủ 3 pha + thiết kế CSDL/UI;
+  \item 34 UC tách mịn, có đặc tả + 34 sequence;
+  \item Cơ chế duyệt phiếu -- tồn chỉ đổi sau duyệt;
+  \item Phân quyền 3 vai trò + audit log;
+  \item Hỗ trợ đa kho, báo cáo NXT.
+\end{itemize}
+\end{cauhoi}
+
+\begin{cauhoi}[Câu 38]
+\cau{Hạn chế và hướng phát triển?}
+\traloi
+Hạn chế (gợi ý thành thật): chưa triển khai full production; chưa tích hợp kế toán/bán hàng; chưa barcode/QR, mobile app chuyên sâu.
+
+Hướng phát triển: tích hợp kế toán; cảnh báo tồn AI; quét mã; đa chi nhánh; dashboard real-time.
+\end{cauhoi}
+
+% ============================================================
+\section{Bảng tra cứu nhanh: tên biểu đồ -- ý nghĩa}
+% ============================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|p{3.0cm}|p{3.2cm}|p{7.2cm}|}
+\hline
+\textbf{Tên (EN)} & \textbf{Tên (VN)} & \textbf{Ý nghĩa cốt lõi (1 câu)} \\
+\hline
+Activity & Hoạt động & Luồng quy trình nghiệp vụ, quyết định, nhánh. \\
+\hline
+Use Case & Ca sử dụng & Ai dùng hệ thống để đạt mục tiêu gì. \\
+\hline
+Class & Lớp & Cấu trúc tĩnh: lớp, thuộc tính, quan hệ. \\
+\hline
+Sequence & Trình tự & Tương tác message theo thời gian giữa đối tượng. \\
+\hline
+State & Trạng thái & Vòng đời / chuyển trạng thái của 1 đối tượng. \\
+\hline
+Component & Thành phần & Kiến trúc module triển khai. \\
+\hline
+CRUD & Thêm-đọc-sửa-xóa & Bộ thao tác dữ liệu danh mục/phiếu. \\
+\hline
+Actor & Tác nhân & Vai trò bên ngoài khởi tạo use case. \\
+\hline
+Include & Bao gồm & Use case A bắt buộc gọi B. \\
+\hline
+NXT & Nhập-Xuất-Tồn & Báo cáo tổng hợp kho theo kỳ. \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{8pt}
+\begin{tcolorbox}[colback=yellow!8, colframe=qblue, title=\textbf{Mẹo trả lời vấn đáp}]
+\begin{enumerate}[leftmargin=1.4em,itemsep=3pt]
+  \item Nêu \textbf{định nghĩa ngắn} $\rightarrow$ \textbf{ý nghĩa trong đề tài} $\rightarrow$ \textbf{ví dụ cụ thể} (tên hình / UC).
+  \item Với câu ``biểu đồ gì'': nhớ chuỗi \textbf{Activity $\rightarrow$ Use Case $\rightarrow$ Class $\rightarrow$ Sequence + State $\rightarrow$ Component}.
+  \item Nhấn mạnh nguyên tắc vàng: \textbf{tồn kho chỉ đổi khi phiếu được duyệt}.
+  \item Phân biệt rõ \textbf{nghiệp vụ} (gói) vs \textbf{use case} (mục tiêu cụ thể).
+  \item Nếu không nhớ số hình: nói đúng \textbf{loại biểu đồ + chương + ví dụ nghiệp vụ}.
+\end{enumerate}
+\end{tcolorbox}
+
+\vspace{12pt}
+\begin{center}
+\textit{--- Hết tài liệu ôn vấn đáp ---}\\[4pt]
+{\small Dựa trên báo cáo \textbf{Phân tích và thiết kế hệ thống quản lý kho hàng} (tháng 7/2026).}
+\end{center}
+
+\end{document}
