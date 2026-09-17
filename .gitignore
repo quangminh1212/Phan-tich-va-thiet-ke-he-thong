@@ -14,3 +14,9 @@ VIII.HUST/Phân tích và thiết kế hệ thống/*.png
 
 # IDE metadata
 .devin/
+
+# Generated runtime artifacts
+node_modules/
+*.exe
+src/.run/
+*.db
